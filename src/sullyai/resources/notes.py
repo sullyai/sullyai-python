@@ -36,7 +36,7 @@ class NotesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/SullyAI/sullyai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/sullyai/sullyai-python#accessing-raw-response-data-eg-headers
         """
         return NotesResourceWithRawResponse(self)
 
@@ -45,21 +45,21 @@ class NotesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/SullyAI/sullyai-python#with_streaming_response
+        For more information, see https://www.github.com/sullyai/sullyai-python#with_streaming_response
         """
         return NotesResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
-        date: Union[str, date],
-        transcript: str,
         context: Optional[str] | NotGiven = NOT_GIVEN,
+        date: Union[str, date] | NotGiven = NOT_GIVEN,
         instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
         medication_list: str | NotGiven = NOT_GIVEN,
         note_type: note_create_params.NoteType | NotGiven = NOT_GIVEN,
         patient_info: note_create_params.PatientInfo | NotGiven = NOT_GIVEN,
         previous_note: str | NotGiven = NOT_GIVEN,
+        transcript: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -67,13 +67,14 @@ class NotesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> NoteCreateResponse:
-        """
-        Creates a new note
+        """Creates a new note
 
         Args:
-          date: Date of the patient encounter
+          context: Additional context for note generation.
 
-          context: Additional context for note generation. This field is optional.
+        This field is optional.
+
+          date: Date of the patient encounter
 
           instructions: Special instructions for note generation. This field is optional.
 
@@ -96,14 +97,14 @@ class NotesResource(SyncAPIResource):
             "/v1/notes",
             body=maybe_transform(
                 {
-                    "date": date,
-                    "transcript": transcript,
                     "context": context,
+                    "date": date,
                     "instructions": instructions,
                     "medication_list": medication_list,
                     "note_type": note_type,
                     "patient_info": patient_info,
                     "previous_note": previous_note,
+                    "transcript": transcript,
                 },
                 note_create_params.NoteCreateParams,
             ),
@@ -187,7 +188,7 @@ class AsyncNotesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/SullyAI/sullyai-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/sullyai/sullyai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncNotesResourceWithRawResponse(self)
 
@@ -196,21 +197,21 @@ class AsyncNotesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/SullyAI/sullyai-python#with_streaming_response
+        For more information, see https://www.github.com/sullyai/sullyai-python#with_streaming_response
         """
         return AsyncNotesResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
-        date: Union[str, date],
-        transcript: str,
         context: Optional[str] | NotGiven = NOT_GIVEN,
+        date: Union[str, date] | NotGiven = NOT_GIVEN,
         instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
         medication_list: str | NotGiven = NOT_GIVEN,
         note_type: note_create_params.NoteType | NotGiven = NOT_GIVEN,
         patient_info: note_create_params.PatientInfo | NotGiven = NOT_GIVEN,
         previous_note: str | NotGiven = NOT_GIVEN,
+        transcript: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -218,13 +219,14 @@ class AsyncNotesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> NoteCreateResponse:
-        """
-        Creates a new note
+        """Creates a new note
 
         Args:
-          date: Date of the patient encounter
+          context: Additional context for note generation.
 
-          context: Additional context for note generation. This field is optional.
+        This field is optional.
+
+          date: Date of the patient encounter
 
           instructions: Special instructions for note generation. This field is optional.
 
@@ -247,14 +249,14 @@ class AsyncNotesResource(AsyncAPIResource):
             "/v1/notes",
             body=await async_maybe_transform(
                 {
-                    "date": date,
-                    "transcript": transcript,
                     "context": context,
+                    "date": date,
                     "instructions": instructions,
                     "medication_list": medication_list,
                     "note_type": note_type,
                     "patient_info": patient_info,
                     "previous_note": previous_note,
+                    "transcript": transcript,
                 },
                 note_create_params.NoteCreateParams,
             ),

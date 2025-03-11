@@ -4,7 +4,7 @@ from urllib.parse import unquote
 
 import pytest
 
-from sullyai_api._qs import Querystring, stringify
+from sullyai._qs import Querystring, stringify
 
 
 def test_empty() -> None:
