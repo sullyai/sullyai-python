@@ -1,8 +1,8 @@
-# Sullyai API Python API library
+# Sully AI Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/sullyai_api.svg)](https://pypi.org/project/sullyai_api/)
+[![PyPI version](https://img.shields.io/pypi/v/sullyai.svg)](https://pypi.org/project/sullyai/)
 
-The Sullyai API Python library provides convenient access to the Sullyai API REST API from any Python 3.8+
+The Sully AI Python library provides convenient access to the Sully AI REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -10,17 +10,14 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.sullyai-api.com](https://docs.sullyai-api.com). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.sully.ai](https://docs.sully.ai). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
 ```sh
-# install from this staging repo
-pip install git+ssh://git@github.com/stainless-sdks/sullyai-api-python.git
+# install from PyPI
+pip install --pre sullyai
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://app.stainless.com/docs/guides/publish), this will become: `pip install --pre sullyai_api`
 
 ## Usage
 
@@ -28,11 +25,11 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from sullyai_api import SullyaiAPI
+from sullyai import SullyAI
 
-client = SullyaiAPI(
-    api_key=os.environ.get("SULLYAI_API_API_KEY"),  # This is the default and can be omitted
-    account_id=os.environ.get("SULLYAI_API_ACCOUNT_ID"),  # This is the default and can be omitted
+client = SullyAI(
+    api_key=os.environ.get("SULLYAI_API_KEY"),  # This is the default and can be omitted
+    account_id=os.environ.get("SULLYAI_ACCOUNT_ID"),  # This is the default and can be omitted
     # defaults to "production".
     environment="environment_1",
 )
@@ -45,21 +42,21 @@ print(note.data)
 
 While you can provide an `api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `SULLYAI_API_API_KEY="My API Key"` to your `.env` file
+to add `SULLYAI_API_KEY="My API Key"` to your `.env` file
 so that your API Key is not stored in source control.
 
 ## Async usage
 
-Simply import `AsyncSullyaiAPI` instead of `SullyaiAPI` and use `await` with each API call:
+Simply import `AsyncSullyAI` instead of `SullyAI` and use `await` with each API call:
 
 ```python
 import os
 import asyncio
-from sullyai_api import AsyncSullyaiAPI
+from sullyai import AsyncSullyAI
 
-client = AsyncSullyaiAPI(
-    api_key=os.environ.get("SULLYAI_API_API_KEY"),  # This is the default and can be omitted
-    account_id=os.environ.get("SULLYAI_API_ACCOUNT_ID"),  # This is the default and can be omitted
+client = AsyncSullyAI(
+    api_key=os.environ.get("SULLYAI_API_KEY"),  # This is the default and can be omitted
+    account_id=os.environ.get("SULLYAI_ACCOUNT_ID"),  # This is the default and can be omitted
     # defaults to "production".
     environment="environment_1",
 )
@@ -86,16 +83,20 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
+from sullyai.\_utils import parse_date
+
 ## Nested params
 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
 
 ```python
-from sullyai_api import SullyaiAPI
+from sullyai import SullyAI
 
-client = SullyaiAPI()
+client = SullyAI()
 
 note = client.notes.create(
+    date=parse_date("2019-12-27"),
+    transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
     note_type={
         "description": "description",
         "include_json": True,
@@ -112,9 +113,9 @@ Request parameters that correspond to file uploads can be passed as `bytes`, a [
 
 ```python
 from pathlib import Path
-from sullyai_api import SullyaiAPI
+from sullyai import SullyAI
 
-client = SullyaiAPI()
+client = SullyAI()
 
 client.audio.transcriptions.create(
     audio=Path("/path/to/file"),
@@ -125,29 +126,29 @@ The async client uses the exact same interface. If you pass a [`PathLike`](https
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `sullyai_api.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `sullyai.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `sullyai_api.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `sullyai.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `sullyai_api.APIError`.
+All errors inherit from `sullyai.APIError`.
 
 ```python
-import sullyai_api
-from sullyai_api import SullyaiAPI
+import sullyai
+from sullyai import SullyAI
 
-client = SullyaiAPI()
+client = SullyAI()
 
 try:
     client.notes.retrieve(
         "REPLACE_ME",
     )
-except sullyai_api.APIConnectionError as e:
+except sullyai.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except sullyai_api.RateLimitError as e:
+except sullyai.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except sullyai_api.APIStatusError as e:
+except sullyai.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -175,10 +176,10 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from sullyai_api import SullyaiAPI
+from sullyai import SullyAI
 
 # Configure the default for all requests:
-client = SullyaiAPI(
+client = SullyAI(
     # default is 2
     max_retries=0,
 )
@@ -195,16 +196,16 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from sullyai_api import SullyaiAPI
+from sullyai import SullyAI
 
 # Configure the default for all requests:
-client = SullyaiAPI(
+client = SullyAI(
     # 20 seconds (default is 1 minute)
     timeout=20.0,
 )
 
 # More granular control:
-client = SullyaiAPI(
+client = SullyAI(
     timeout=httpx.Timeout(60.0, read=5.0, write=10.0, connect=2.0),
 )
 
@@ -224,10 +225,10 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `SULLYAI_API_LOG` to `info`.
+You can enable logging by setting the environment variable `SULLY_AI_LOG` to `info`.
 
 ```shell
-$ export SULLYAI_API_LOG=info
+$ export SULLY_AI_LOG=info
 ```
 
 Or to `debug` for more verbose logging.
@@ -249,9 +250,9 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from sullyai_api import SullyaiAPI
+from sullyai import SullyAI
 
-client = SullyaiAPI()
+client = SullyAI()
 response = client.notes.with_raw_response.retrieve(
     "REPLACE_ME",
 )
@@ -261,9 +262,9 @@ note = response.parse()  # get the object that `notes.retrieve()` would have ret
 print(note.data)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/sullyai-api-python/tree/main/src/sullyai_api/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/sullyai/sullyai-python/tree/main/src/sullyai/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/sullyai-api-python/tree/main/src/sullyai_api/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/sullyai/sullyai-python/tree/main/src/sullyai/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -327,10 +328,10 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from sullyai_api import SullyaiAPI, DefaultHttpxClient
+from sullyai import SullyAI, DefaultHttpxClient
 
-client = SullyaiAPI(
-    # Or use the `SULLYAI_API_BASE_URL` env var
+client = SullyAI(
+    # Or use the `SULLY_AI_BASE_URL` env var
     base_url="http://my.test.server.example.com:8083",
     http_client=DefaultHttpxClient(
         proxy="http://my.test.proxy.example.com",
@@ -350,9 +351,9 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from sullyai_api import SullyaiAPI
+from sullyai import SullyAI
 
-with SullyaiAPI() as client:
+with SullyAI() as client:
   # make requests here
   ...
 
@@ -369,7 +370,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/sullyai-api-python/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/sullyai/sullyai-python/issues) with questions, bugs, or suggestions.
 
 ### Determining the installed version
 
@@ -378,8 +379,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import sullyai_api
-print(sullyai_api.__version__)
+import sullyai
+print(sullyai.__version__)
 ```
 
 ## Requirements

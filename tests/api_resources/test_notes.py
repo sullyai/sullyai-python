@@ -7,10 +7,10 @@ from typing import Any, cast
 
 import pytest
 
-from sullyai_api import SullyaiAPI, AsyncSullyaiAPI
+from sullyai import SullyAI, AsyncSullyAI
 from tests.utils import assert_matches_type
-from sullyai_api.types import DeleteResponse, NoteCreateResponse, NoteRetrieveResponse
-from sullyai_api._utils import parse_date
+from sullyai.types import DeleteResponse, NoteCreateResponse, NoteRetrieveResponse
+from sullyai._utils import parse_date
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -20,16 +20,20 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_create(self, client: SullyaiAPI) -> None:
-        note = client.notes.create()
+    def test_method_create(self, client: SullyAI) -> None:
+        note = client.notes.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_create_with_all_params(self, client: SullyaiAPI) -> None:
+    def test_method_create_with_all_params(self, client: SullyAI) -> None:
         note = client.notes.create(
-            context="context",
             date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+            context="context",
             instructions=[
                 "Use a professional and concise tone.",
                 "Include key details without unnecessary elaboration.",
@@ -48,14 +52,16 @@ class TestNotes:
                 "name": "name",
             },
             previous_note="previousNote",
-            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_create(self, client: SullyaiAPI) -> None:
-        response = client.notes.with_raw_response.create()
+    def test_raw_response_create(self, client: SullyAI) -> None:
+        response = client.notes.with_raw_response.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -64,8 +70,11 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_create(self, client: SullyaiAPI) -> None:
-        with client.notes.with_streaming_response.create() as response:
+    def test_streaming_response_create(self, client: SullyAI) -> None:
+        with client.notes.with_streaming_response.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -76,7 +85,7 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_retrieve(self, client: SullyaiAPI) -> None:
+    def test_method_retrieve(self, client: SullyAI) -> None:
         note = client.notes.retrieve(
             "noteId",
         )
@@ -84,7 +93,7 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_retrieve(self, client: SullyaiAPI) -> None:
+    def test_raw_response_retrieve(self, client: SullyAI) -> None:
         response = client.notes.with_raw_response.retrieve(
             "noteId",
         )
@@ -96,7 +105,7 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_retrieve(self, client: SullyaiAPI) -> None:
+    def test_streaming_response_retrieve(self, client: SullyAI) -> None:
         with client.notes.with_streaming_response.retrieve(
             "noteId",
         ) as response:
@@ -110,7 +119,7 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_path_params_retrieve(self, client: SullyaiAPI) -> None:
+    def test_path_params_retrieve(self, client: SullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `note_id` but received ''"):
             client.notes.with_raw_response.retrieve(
                 "",
@@ -118,7 +127,7 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_delete(self, client: SullyaiAPI) -> None:
+    def test_method_delete(self, client: SullyAI) -> None:
         note = client.notes.delete(
             "noteId",
         )
@@ -126,7 +135,7 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_delete(self, client: SullyaiAPI) -> None:
+    def test_raw_response_delete(self, client: SullyAI) -> None:
         response = client.notes.with_raw_response.delete(
             "noteId",
         )
@@ -138,7 +147,7 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_delete(self, client: SullyaiAPI) -> None:
+    def test_streaming_response_delete(self, client: SullyAI) -> None:
         with client.notes.with_streaming_response.delete(
             "noteId",
         ) as response:
@@ -152,7 +161,7 @@ class TestNotes:
 
     @pytest.mark.skip()
     @parametrize
-    def test_path_params_delete(self, client: SullyaiAPI) -> None:
+    def test_path_params_delete(self, client: SullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `note_id` but received ''"):
             client.notes.with_raw_response.delete(
                 "",
@@ -164,16 +173,20 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_create(self, async_client: AsyncSullyaiAPI) -> None:
-        note = await async_client.notes.create()
+    async def test_method_create(self, async_client: AsyncSullyAI) -> None:
+        note = await async_client.notes.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_method_create_with_all_params(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.create(
-            context="context",
             date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+            context="context",
             instructions=[
                 "Use a professional and concise tone.",
                 "Include key details without unnecessary elaboration.",
@@ -192,14 +205,16 @@ class TestAsyncNotes:
                 "name": "name",
             },
             previous_note="previousNote",
-            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_create(self, async_client: AsyncSullyaiAPI) -> None:
-        response = await async_client.notes.with_raw_response.create()
+    async def test_raw_response_create(self, async_client: AsyncSullyAI) -> None:
+        response = await async_client.notes.with_raw_response.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -208,8 +223,11 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_create(self, async_client: AsyncSullyaiAPI) -> None:
-        async with async_client.notes.with_streaming_response.create() as response:
+    async def test_streaming_response_create(self, async_client: AsyncSullyAI) -> None:
+        async with async_client.notes.with_streaming_response.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -220,7 +238,7 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_method_retrieve(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.retrieve(
             "noteId",
         )
@@ -228,7 +246,7 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.notes.with_raw_response.retrieve(
             "noteId",
         )
@@ -240,7 +258,7 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncSullyAI) -> None:
         async with async_client.notes.with_streaming_response.retrieve(
             "noteId",
         ) as response:
@@ -254,7 +272,7 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_path_params_retrieve(self, async_client: AsyncSullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `note_id` but received ''"):
             await async_client.notes.with_raw_response.retrieve(
                 "",
@@ -262,7 +280,7 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_delete(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_method_delete(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.delete(
             "noteId",
         )
@@ -270,7 +288,7 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_delete(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_raw_response_delete(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.notes.with_raw_response.delete(
             "noteId",
         )
@@ -282,7 +300,7 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_delete(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_streaming_response_delete(self, async_client: AsyncSullyAI) -> None:
         async with async_client.notes.with_streaming_response.delete(
             "noteId",
         ) as response:
@@ -296,7 +314,7 @@ class TestAsyncNotes:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_path_params_delete(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_path_params_delete(self, async_client: AsyncSullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `note_id` but received ''"):
             await async_client.notes.with_raw_response.delete(
                 "",

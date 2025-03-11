@@ -26,7 +26,7 @@ from ._utils import (
 from ._version import __version__
 from .resources import notes, note_styles
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, SullyaiAPIError
+from ._exceptions import SullyAIError, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -40,8 +40,8 @@ __all__ = [
     "Transport",
     "ProxiesTypes",
     "RequestOptions",
-    "SullyaiAPI",
-    "AsyncSullyaiAPI",
+    "SullyAI",
+    "AsyncSullyAI",
     "Client",
     "AsyncClient",
 ]
@@ -52,12 +52,12 @@ ENVIRONMENTS: Dict[str, str] = {
 }
 
 
-class SullyaiAPI(SyncAPIClient):
+class SullyAI(SyncAPIClient):
     notes: notes.NotesResource
     note_styles: note_styles.NoteStylesResource
     audio: audio.AudioResource
-    with_raw_response: SullyaiAPIWithRawResponse
-    with_streaming_response: SullyaiAPIWithStreamedResponse
+    with_raw_response: SullyAIWithRawResponse
+    with_streaming_response: SullyAIWithStreamedResponse
 
     # client options
     api_key: str
@@ -90,38 +90,38 @@ class SullyaiAPI(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous SullyaiAPI client instance.
+        """Construct a new synchronous SullyAI client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
-        - `api_key` from `SULLYAI_API_API_KEY`
-        - `account_id` from `SULLYAI_API_ACCOUNT_ID`
+        - `api_key` from `SULLYAI_API_KEY`
+        - `account_id` from `SULLYAI_ACCOUNT_ID`
         """
         if api_key is None:
-            api_key = os.environ.get("SULLYAI_API_API_KEY")
+            api_key = os.environ.get("SULLYAI_API_KEY")
         if api_key is None:
-            raise SullyaiAPIError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the SULLYAI_API_API_KEY environment variable"
+            raise SullyAIError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the SULLYAI_API_KEY environment variable"
             )
         self.api_key = api_key
 
         if account_id is None:
-            account_id = os.environ.get("SULLYAI_API_ACCOUNT_ID")
+            account_id = os.environ.get("SULLYAI_ACCOUNT_ID")
         if account_id is None:
-            raise SullyaiAPIError(
-                "The account_id client option must be set either by passing account_id to the client or by setting the SULLYAI_API_ACCOUNT_ID environment variable"
+            raise SullyAIError(
+                "The account_id client option must be set either by passing account_id to the client or by setting the SULLYAI_ACCOUNT_ID environment variable"
             )
         self.account_id = account_id
 
         self._environment = environment
 
-        base_url_env = os.environ.get("SULLYAI_API_BASE_URL")
+        base_url_env = os.environ.get("SULLY_AI_BASE_URL")
         if is_given(base_url) and base_url is not None:
             # cast required because mypy doesn't understand the type narrowing
             base_url = cast("str | httpx.URL", base_url)  # pyright: ignore[reportUnnecessaryCast]
         elif is_given(environment):
             if base_url_env and base_url is not None:
                 raise ValueError(
-                    "Ambiguous URL; The `SULLYAI_API_BASE_URL` env var and the `environment` argument are given. If you want to use the environment, you must pass base_url=None",
+                    "Ambiguous URL; The `SULLY_AI_BASE_URL` env var and the `environment` argument are given. If you want to use the environment, you must pass base_url=None",
                 )
 
             try:
@@ -152,8 +152,8 @@ class SullyaiAPI(SyncAPIClient):
         self.notes = notes.NotesResource(self)
         self.note_styles = note_styles.NoteStylesResource(self)
         self.audio = audio.AudioResource(self)
-        self.with_raw_response = SullyaiAPIWithRawResponse(self)
-        self.with_streaming_response = SullyaiAPIWithStreamedResponse(self)
+        self.with_raw_response = SullyAIWithRawResponse(self)
+        self.with_streaming_response = SullyAIWithStreamedResponse(self)
 
     @property
     @override
@@ -277,12 +277,12 @@ class SullyaiAPI(SyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class AsyncSullyaiAPI(AsyncAPIClient):
+class AsyncSullyAI(AsyncAPIClient):
     notes: notes.AsyncNotesResource
     note_styles: note_styles.AsyncNoteStylesResource
     audio: audio.AsyncAudioResource
-    with_raw_response: AsyncSullyaiAPIWithRawResponse
-    with_streaming_response: AsyncSullyaiAPIWithStreamedResponse
+    with_raw_response: AsyncSullyAIWithRawResponse
+    with_streaming_response: AsyncSullyAIWithStreamedResponse
 
     # client options
     api_key: str
@@ -315,38 +315,38 @@ class AsyncSullyaiAPI(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async AsyncSullyaiAPI client instance.
+        """Construct a new async AsyncSullyAI client instance.
 
         This automatically infers the following arguments from their corresponding environment variables if they are not provided:
-        - `api_key` from `SULLYAI_API_API_KEY`
-        - `account_id` from `SULLYAI_API_ACCOUNT_ID`
+        - `api_key` from `SULLYAI_API_KEY`
+        - `account_id` from `SULLYAI_ACCOUNT_ID`
         """
         if api_key is None:
-            api_key = os.environ.get("SULLYAI_API_API_KEY")
+            api_key = os.environ.get("SULLYAI_API_KEY")
         if api_key is None:
-            raise SullyaiAPIError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the SULLYAI_API_API_KEY environment variable"
+            raise SullyAIError(
+                "The api_key client option must be set either by passing api_key to the client or by setting the SULLYAI_API_KEY environment variable"
             )
         self.api_key = api_key
 
         if account_id is None:
-            account_id = os.environ.get("SULLYAI_API_ACCOUNT_ID")
+            account_id = os.environ.get("SULLYAI_ACCOUNT_ID")
         if account_id is None:
-            raise SullyaiAPIError(
-                "The account_id client option must be set either by passing account_id to the client or by setting the SULLYAI_API_ACCOUNT_ID environment variable"
+            raise SullyAIError(
+                "The account_id client option must be set either by passing account_id to the client or by setting the SULLYAI_ACCOUNT_ID environment variable"
             )
         self.account_id = account_id
 
         self._environment = environment
 
-        base_url_env = os.environ.get("SULLYAI_API_BASE_URL")
+        base_url_env = os.environ.get("SULLY_AI_BASE_URL")
         if is_given(base_url) and base_url is not None:
             # cast required because mypy doesn't understand the type narrowing
             base_url = cast("str | httpx.URL", base_url)  # pyright: ignore[reportUnnecessaryCast]
         elif is_given(environment):
             if base_url_env and base_url is not None:
                 raise ValueError(
-                    "Ambiguous URL; The `SULLYAI_API_BASE_URL` env var and the `environment` argument are given. If you want to use the environment, you must pass base_url=None",
+                    "Ambiguous URL; The `SULLY_AI_BASE_URL` env var and the `environment` argument are given. If you want to use the environment, you must pass base_url=None",
                 )
 
             try:
@@ -377,8 +377,8 @@ class AsyncSullyaiAPI(AsyncAPIClient):
         self.notes = notes.AsyncNotesResource(self)
         self.note_styles = note_styles.AsyncNoteStylesResource(self)
         self.audio = audio.AsyncAudioResource(self)
-        self.with_raw_response = AsyncSullyaiAPIWithRawResponse(self)
-        self.with_streaming_response = AsyncSullyaiAPIWithStreamedResponse(self)
+        self.with_raw_response = AsyncSullyAIWithRawResponse(self)
+        self.with_streaming_response = AsyncSullyAIWithStreamedResponse(self)
 
     @property
     @override
@@ -502,34 +502,34 @@ class AsyncSullyaiAPI(AsyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class SullyaiAPIWithRawResponse:
-    def __init__(self, client: SullyaiAPI) -> None:
+class SullyAIWithRawResponse:
+    def __init__(self, client: SullyAI) -> None:
         self.notes = notes.NotesResourceWithRawResponse(client.notes)
         self.note_styles = note_styles.NoteStylesResourceWithRawResponse(client.note_styles)
         self.audio = audio.AudioResourceWithRawResponse(client.audio)
 
 
-class AsyncSullyaiAPIWithRawResponse:
-    def __init__(self, client: AsyncSullyaiAPI) -> None:
+class AsyncSullyAIWithRawResponse:
+    def __init__(self, client: AsyncSullyAI) -> None:
         self.notes = notes.AsyncNotesResourceWithRawResponse(client.notes)
         self.note_styles = note_styles.AsyncNoteStylesResourceWithRawResponse(client.note_styles)
         self.audio = audio.AsyncAudioResourceWithRawResponse(client.audio)
 
 
-class SullyaiAPIWithStreamedResponse:
-    def __init__(self, client: SullyaiAPI) -> None:
+class SullyAIWithStreamedResponse:
+    def __init__(self, client: SullyAI) -> None:
         self.notes = notes.NotesResourceWithStreamingResponse(client.notes)
         self.note_styles = note_styles.NoteStylesResourceWithStreamingResponse(client.note_styles)
         self.audio = audio.AudioResourceWithStreamingResponse(client.audio)
 
 
-class AsyncSullyaiAPIWithStreamedResponse:
-    def __init__(self, client: AsyncSullyaiAPI) -> None:
+class AsyncSullyAIWithStreamedResponse:
+    def __init__(self, client: AsyncSullyAI) -> None:
         self.notes = notes.AsyncNotesResourceWithStreamingResponse(client.notes)
         self.note_styles = note_styles.AsyncNoteStylesResourceWithStreamingResponse(client.note_styles)
         self.audio = audio.AsyncAudioResourceWithStreamingResponse(client.audio)
 
 
-Client = SullyaiAPI
+Client = SullyAI
 
-AsyncClient = AsyncSullyaiAPI
+AsyncClient = AsyncSullyAI

@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from sullyai_api import SullyaiAPI, AsyncSullyaiAPI
+from sullyai import SullyAI, AsyncSullyAI
 from tests.utils import assert_matches_type
-from sullyai_api.types.audio.transcriptions import StreamCreateTokenResponse
+from sullyai.types.audio.transcriptions import StreamCreateTokenResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -19,7 +19,7 @@ class TestStream:
 
     @pytest.mark.skip()
     @parametrize
-    def test_method_create_token(self, client: SullyaiAPI) -> None:
+    def test_method_create_token(self, client: SullyAI) -> None:
         stream = client.audio.transcriptions.stream.create_token(
             expires_in=3600,
         )
@@ -27,7 +27,7 @@ class TestStream:
 
     @pytest.mark.skip()
     @parametrize
-    def test_raw_response_create_token(self, client: SullyaiAPI) -> None:
+    def test_raw_response_create_token(self, client: SullyAI) -> None:
         response = client.audio.transcriptions.stream.with_raw_response.create_token(
             expires_in=3600,
         )
@@ -39,7 +39,7 @@ class TestStream:
 
     @pytest.mark.skip()
     @parametrize
-    def test_streaming_response_create_token(self, client: SullyaiAPI) -> None:
+    def test_streaming_response_create_token(self, client: SullyAI) -> None:
         with client.audio.transcriptions.stream.with_streaming_response.create_token(
             expires_in=3600,
         ) as response:
@@ -57,7 +57,7 @@ class TestAsyncStream:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_method_create_token(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_method_create_token(self, async_client: AsyncSullyAI) -> None:
         stream = await async_client.audio.transcriptions.stream.create_token(
             expires_in=3600,
         )
@@ -65,7 +65,7 @@ class TestAsyncStream:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_raw_response_create_token(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_raw_response_create_token(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.audio.transcriptions.stream.with_raw_response.create_token(
             expires_in=3600,
         )
@@ -77,7 +77,7 @@ class TestAsyncStream:
 
     @pytest.mark.skip()
     @parametrize
-    async def test_streaming_response_create_token(self, async_client: AsyncSullyaiAPI) -> None:
+    async def test_streaming_response_create_token(self, async_client: AsyncSullyAI) -> None:
         async with async_client.audio.transcriptions.stream.with_streaming_response.create_token(
             expires_in=3600,
         ) as response:

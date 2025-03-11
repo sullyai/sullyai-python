@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from sullyai_api._utils import PropertyInfo
-from sullyai_api._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
-from sullyai_api._models import BaseModel, construct_type
+from sullyai._utils import PropertyInfo
+from sullyai._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
+from sullyai._models import BaseModel, construct_type
 
 
 class BasicModel(BaseModel):

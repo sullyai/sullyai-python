@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from sullyai_api._utils import required_args
+from sullyai._utils import required_args
 
 
 def test_too_many_positional_params() -> None:

@@ -7,14 +7,14 @@ from typing import TYPE_CHECKING, Iterator, AsyncIterator
 import pytest
 from pytest_asyncio import is_async_test
 
-from sullyai_api import SullyaiAPI, AsyncSullyaiAPI
+from sullyai import SullyAI, AsyncSullyAI
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest
 
 pytest.register_assert_rewrite("tests.utils")
 
-logging.getLogger("sullyai_api").setLevel(logging.DEBUG)
+logging.getLogger("sullyai").setLevel(logging.DEBUG)
 
 
 # automatically add `pytest.mark.asyncio()` to all of our async tests
@@ -33,24 +33,24 @@ account_id = "My Account ID"
 
 
 @pytest.fixture(scope="session")
-def client(request: FixtureRequest) -> Iterator[SullyaiAPI]:
+def client(request: FixtureRequest) -> Iterator[SullyAI]:
     strict = getattr(request, "param", True)
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with SullyaiAPI(
+    with SullyAI(
         base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=strict
     ) as client:
         yield client
 
 
 @pytest.fixture(scope="session")
-async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncSullyaiAPI]:
+async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncSullyAI]:
     strict = getattr(request, "param", True)
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    async with AsyncSullyaiAPI(
+    async with AsyncSullyAI(
         base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=strict
     ) as client:
         yield client

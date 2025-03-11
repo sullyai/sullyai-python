@@ -21,12 +21,12 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from sullyai_api import SullyaiAPI, AsyncSullyaiAPI, APIResponseValidationError
-from sullyai_api._types import Omit
-from sullyai_api._models import BaseModel, FinalRequestOptions
-from sullyai_api._constants import RAW_RESPONSE_HEADER
-from sullyai_api._exceptions import APIStatusError, APITimeoutError, SullyaiAPIError, APIResponseValidationError
-from sullyai_api._base_client import (
+from sullyai import SullyAI, AsyncSullyAI, APIResponseValidationError
+from sullyai._types import Omit
+from sullyai._models import BaseModel, FinalRequestOptions
+from sullyai._constants import RAW_RESPONSE_HEADER
+from sullyai._exceptions import SullyAIError, APIStatusError, APITimeoutError, APIResponseValidationError
+from sullyai._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -50,7 +50,7 @@ def _low_retry_timeout(*_args: Any, **_kwargs: Any) -> float:
     return 0.1
 
 
-def _get_open_connections(client: SullyaiAPI | AsyncSullyaiAPI) -> int:
+def _get_open_connections(client: SullyAI | AsyncSullyAI) -> int:
     transport = client._client._transport
     assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
 
@@ -58,8 +58,8 @@ def _get_open_connections(client: SullyaiAPI | AsyncSullyaiAPI) -> int:
     return len(pool._requests)
 
 
-class TestSullyaiAPI:
-    client = SullyaiAPI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
+class TestSullyAI:
+    client = SullyAI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -110,7 +110,7 @@ class TestSullyaiAPI:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = SullyaiAPI(
+        client = SullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -148,7 +148,7 @@ class TestSullyaiAPI:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = SullyaiAPI(
+        client = SullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -243,10 +243,10 @@ class TestSullyaiAPI:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "sullyai_api/_legacy_response.py",
-                        "sullyai_api/_response.py",
+                        "sullyai/_legacy_response.py",
+                        "sullyai/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "sullyai_api/_compat.py",
+                        "sullyai/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -277,7 +277,7 @@ class TestSullyaiAPI:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = SullyaiAPI(
+        client = SullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -292,7 +292,7 @@ class TestSullyaiAPI:
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
-            client = SullyaiAPI(
+            client = SullyAI(
                 base_url=base_url,
                 api_key=api_key,
                 account_id=account_id,
@@ -306,7 +306,7 @@ class TestSullyaiAPI:
 
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
-            client = SullyaiAPI(
+            client = SullyAI(
                 base_url=base_url,
                 api_key=api_key,
                 account_id=account_id,
@@ -320,7 +320,7 @@ class TestSullyaiAPI:
 
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = SullyaiAPI(
+            client = SullyAI(
                 base_url=base_url,
                 api_key=api_key,
                 account_id=account_id,
@@ -335,7 +335,7 @@ class TestSullyaiAPI:
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             async with httpx.AsyncClient() as http_client:
-                SullyaiAPI(
+                SullyAI(
                     base_url=base_url,
                     api_key=api_key,
                     account_id=account_id,
@@ -344,7 +344,7 @@ class TestSullyaiAPI:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = SullyaiAPI(
+        client = SullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -355,7 +355,7 @@ class TestSullyaiAPI:
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = SullyaiAPI(
+        client2 = SullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -370,24 +370,24 @@ class TestSullyaiAPI:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = SullyaiAPI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
+        client = SullyAI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("X-API-KEY") == api_key
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("X-ACCOUNT-ID") == account_id
 
-        with pytest.raises(SullyaiAPIError):
+        with pytest.raises(SullyAIError):
             with update_env(
                 **{
-                    "SULLYAI_API_API_KEY": Omit(),
-                    "SULLYAI_API_ACCOUNT_ID": Omit(),
+                    "SULLYAI_API_KEY": Omit(),
+                    "SULLYAI_ACCOUNT_ID": Omit(),
                 }
             ):
-                client2 = SullyaiAPI(base_url=base_url, api_key=None, account_id=None, _strict_response_validation=True)
+                client2 = SullyAI(base_url=base_url, api_key=None, account_id=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = SullyaiAPI(
+        client = SullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -505,7 +505,7 @@ class TestSullyaiAPI:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, client: SullyaiAPI) -> None:
+    def test_multipart_repeating_array(self, client: SullyAI) -> None:
         request = client._build_request(
             FinalRequestOptions.construct(
                 method="get",
@@ -592,7 +592,7 @@ class TestSullyaiAPI:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = SullyaiAPI(
+        client = SullyAI(
             base_url="https://example.com/from_init",
             api_key=api_key,
             account_id=account_id,
@@ -605,18 +605,18 @@ class TestSullyaiAPI:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(SULLYAI_API_BASE_URL="http://localhost:5000/from/env"):
-            client = SullyaiAPI(api_key=api_key, account_id=account_id, _strict_response_validation=True)
+        with update_env(SULLY_AI_BASE_URL="http://localhost:5000/from/env"):
+            client = SullyAI(api_key=api_key, account_id=account_id, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
         # explicit environment arg requires explicitness
-        with update_env(SULLYAI_API_BASE_URL="http://localhost:5000/from/env"):
+        with update_env(SULLY_AI_BASE_URL="http://localhost:5000/from/env"):
             with pytest.raises(ValueError, match=r"you must pass base_url=None"):
-                SullyaiAPI(
+                SullyAI(
                     api_key=api_key, account_id=account_id, _strict_response_validation=True, environment="production"
                 )
 
-            client = SullyaiAPI(
+            client = SullyAI(
                 base_url=None,
                 api_key=api_key,
                 account_id=account_id,
@@ -628,13 +628,13 @@ class TestSullyaiAPI:
     @pytest.mark.parametrize(
         "client",
         [
-            SullyaiAPI(
+            SullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
                 _strict_response_validation=True,
             ),
-            SullyaiAPI(
+            SullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
@@ -644,7 +644,7 @@ class TestSullyaiAPI:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: SullyaiAPI) -> None:
+    def test_base_url_trailing_slash(self, client: SullyAI) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -657,13 +657,13 @@ class TestSullyaiAPI:
     @pytest.mark.parametrize(
         "client",
         [
-            SullyaiAPI(
+            SullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
                 _strict_response_validation=True,
             ),
-            SullyaiAPI(
+            SullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
@@ -673,7 +673,7 @@ class TestSullyaiAPI:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: SullyaiAPI) -> None:
+    def test_base_url_no_trailing_slash(self, client: SullyAI) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -686,13 +686,13 @@ class TestSullyaiAPI:
     @pytest.mark.parametrize(
         "client",
         [
-            SullyaiAPI(
+            SullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
                 _strict_response_validation=True,
             ),
-            SullyaiAPI(
+            SullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
@@ -702,7 +702,7 @@ class TestSullyaiAPI:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: SullyaiAPI) -> None:
+    def test_absolute_request_url(self, client: SullyAI) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -713,7 +713,7 @@ class TestSullyaiAPI:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = SullyaiAPI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
+        client = SullyAI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -724,7 +724,7 @@ class TestSullyaiAPI:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = SullyaiAPI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
+        client = SullyAI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -745,7 +745,7 @@ class TestSullyaiAPI:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            SullyaiAPI(
+            SullyAI(
                 base_url=base_url,
                 api_key=api_key,
                 account_id=account_id,
@@ -760,16 +760,14 @@ class TestSullyaiAPI:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = SullyaiAPI(
+        strict_client = SullyAI(
             base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True
         )
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = SullyaiAPI(
-            base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=False
-        )
+        client = SullyAI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=False)
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -797,14 +795,14 @@ class TestSullyaiAPI:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = SullyaiAPI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
+        client = SullyAI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/notes/noteId").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -816,7 +814,7 @@ class TestSullyaiAPI:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/notes/noteId").mock(return_value=httpx.Response(500))
@@ -829,12 +827,12 @@ class TestSullyaiAPI:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
         self,
-        client: SullyaiAPI,
+        client: SullyAI,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -860,10 +858,10 @@ class TestSullyaiAPI:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
-        self, client: SullyaiAPI, failures_before_success: int, respx_mock: MockRouter
+        self, client: SullyAI, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -883,10 +881,10 @@ class TestSullyaiAPI:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: SullyaiAPI, failures_before_success: int, respx_mock: MockRouter
+        self, client: SullyAI, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -906,10 +904,8 @@ class TestSullyaiAPI:
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
 
-class TestAsyncSullyaiAPI:
-    client = AsyncSullyaiAPI(
-        base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True
-    )
+class TestAsyncSullyAI:
+    client = AsyncSullyAI(base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -962,7 +958,7 @@ class TestAsyncSullyaiAPI:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -1000,7 +996,7 @@ class TestAsyncSullyaiAPI:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -1095,10 +1091,10 @@ class TestAsyncSullyaiAPI:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "sullyai_api/_legacy_response.py",
-                        "sullyai_api/_response.py",
+                        "sullyai/_legacy_response.py",
+                        "sullyai/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "sullyai_api/_compat.py",
+                        "sullyai/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1129,7 +1125,7 @@ class TestAsyncSullyaiAPI:
         assert timeout == httpx.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -1144,7 +1140,7 @@ class TestAsyncSullyaiAPI:
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
-            client = AsyncSullyaiAPI(
+            client = AsyncSullyAI(
                 base_url=base_url,
                 api_key=api_key,
                 account_id=account_id,
@@ -1158,7 +1154,7 @@ class TestAsyncSullyaiAPI:
 
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
-            client = AsyncSullyaiAPI(
+            client = AsyncSullyAI(
                 base_url=base_url,
                 api_key=api_key,
                 account_id=account_id,
@@ -1172,7 +1168,7 @@ class TestAsyncSullyaiAPI:
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = AsyncSullyaiAPI(
+            client = AsyncSullyAI(
                 base_url=base_url,
                 api_key=api_key,
                 account_id=account_id,
@@ -1187,7 +1183,7 @@ class TestAsyncSullyaiAPI:
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
-                AsyncSullyaiAPI(
+                AsyncSullyAI(
                     base_url=base_url,
                     api_key=api_key,
                     account_id=account_id,
@@ -1196,7 +1192,7 @@ class TestAsyncSullyaiAPI:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -1207,7 +1203,7 @@ class TestAsyncSullyaiAPI:
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = AsyncSullyaiAPI(
+        client2 = AsyncSullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -1222,7 +1218,7 @@ class TestAsyncSullyaiAPI:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1230,20 +1226,20 @@ class TestAsyncSullyaiAPI:
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("X-ACCOUNT-ID") == account_id
 
-        with pytest.raises(SullyaiAPIError):
+        with pytest.raises(SullyAIError):
             with update_env(
                 **{
-                    "SULLYAI_API_API_KEY": Omit(),
-                    "SULLYAI_API_ACCOUNT_ID": Omit(),
+                    "SULLYAI_API_KEY": Omit(),
+                    "SULLYAI_ACCOUNT_ID": Omit(),
                 }
             ):
-                client2 = AsyncSullyaiAPI(
+                client2 = AsyncSullyAI(
                     base_url=base_url, api_key=None, account_id=None, _strict_response_validation=True
                 )
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url,
             api_key=api_key,
             account_id=account_id,
@@ -1361,7 +1357,7 @@ class TestAsyncSullyaiAPI:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, async_client: AsyncSullyaiAPI) -> None:
+    def test_multipart_repeating_array(self, async_client: AsyncSullyAI) -> None:
         request = async_client._build_request(
             FinalRequestOptions.construct(
                 method="get",
@@ -1448,7 +1444,7 @@ class TestAsyncSullyaiAPI:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url="https://example.com/from_init",
             api_key=api_key,
             account_id=account_id,
@@ -1461,18 +1457,18 @@ class TestAsyncSullyaiAPI:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(SULLYAI_API_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncSullyaiAPI(api_key=api_key, account_id=account_id, _strict_response_validation=True)
+        with update_env(SULLY_AI_BASE_URL="http://localhost:5000/from/env"):
+            client = AsyncSullyAI(api_key=api_key, account_id=account_id, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
         # explicit environment arg requires explicitness
-        with update_env(SULLYAI_API_BASE_URL="http://localhost:5000/from/env"):
+        with update_env(SULLY_AI_BASE_URL="http://localhost:5000/from/env"):
             with pytest.raises(ValueError, match=r"you must pass base_url=None"):
-                AsyncSullyaiAPI(
+                AsyncSullyAI(
                     api_key=api_key, account_id=account_id, _strict_response_validation=True, environment="production"
                 )
 
-            client = AsyncSullyaiAPI(
+            client = AsyncSullyAI(
                 base_url=None,
                 api_key=api_key,
                 account_id=account_id,
@@ -1484,13 +1480,13 @@ class TestAsyncSullyaiAPI:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncSullyaiAPI(
+            AsyncSullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
                 _strict_response_validation=True,
             ),
-            AsyncSullyaiAPI(
+            AsyncSullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
@@ -1500,7 +1496,7 @@ class TestAsyncSullyaiAPI:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: AsyncSullyaiAPI) -> None:
+    def test_base_url_trailing_slash(self, client: AsyncSullyAI) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1513,13 +1509,13 @@ class TestAsyncSullyaiAPI:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncSullyaiAPI(
+            AsyncSullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
                 _strict_response_validation=True,
             ),
-            AsyncSullyaiAPI(
+            AsyncSullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
@@ -1529,7 +1525,7 @@ class TestAsyncSullyaiAPI:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: AsyncSullyaiAPI) -> None:
+    def test_base_url_no_trailing_slash(self, client: AsyncSullyAI) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1542,13 +1538,13 @@ class TestAsyncSullyaiAPI:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncSullyaiAPI(
+            AsyncSullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
                 _strict_response_validation=True,
             ),
-            AsyncSullyaiAPI(
+            AsyncSullyAI(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 account_id=account_id,
@@ -1558,7 +1554,7 @@ class TestAsyncSullyaiAPI:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: AsyncSullyaiAPI) -> None:
+    def test_absolute_request_url(self, client: AsyncSullyAI) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1569,7 +1565,7 @@ class TestAsyncSullyaiAPI:
         assert request.url == "https://myapi.com/foo"
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True
         )
         assert not client.is_closed()
@@ -1583,7 +1579,7 @@ class TestAsyncSullyaiAPI:
         assert not client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True
         )
         async with client as c2:
@@ -1607,7 +1603,7 @@ class TestAsyncSullyaiAPI:
 
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            AsyncSullyaiAPI(
+            AsyncSullyAI(
                 base_url=base_url,
                 api_key=api_key,
                 account_id=account_id,
@@ -1623,14 +1619,14 @@ class TestAsyncSullyaiAPI:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncSullyaiAPI(
+        strict_client = AsyncSullyAI(
             base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True
         )
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=False
         )
 
@@ -1661,7 +1657,7 @@ class TestAsyncSullyaiAPI:
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncSullyaiAPI(
+        client = AsyncSullyAI(
             base_url=base_url, api_key=api_key, account_id=account_id, _strict_response_validation=True
         )
 
@@ -1670,7 +1666,7 @@ class TestAsyncSullyaiAPI:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/notes/noteId").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -1682,7 +1678,7 @@ class TestAsyncSullyaiAPI:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.get("/v1/notes/noteId").mock(return_value=httpx.Response(500))
@@ -1695,13 +1691,13 @@ class TestAsyncSullyaiAPI:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
-        async_client: AsyncSullyaiAPI,
+        async_client: AsyncSullyAI,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -1727,11 +1723,11 @@ class TestAsyncSullyaiAPI:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
-        self, async_client: AsyncSullyaiAPI, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncSullyAI, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1753,11 +1749,11 @@ class TestAsyncSullyaiAPI:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("sullyai_api._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("sullyai._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncSullyaiAPI, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncSullyAI, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1789,8 +1785,8 @@ class TestAsyncSullyaiAPI:
         import nest_asyncio
         import threading
 
-        from sullyai_api._utils import asyncify
-        from sullyai_api._base_client import get_platform 
+        from sullyai._utils import asyncify
+        from sullyai._base_client import get_platform 
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()

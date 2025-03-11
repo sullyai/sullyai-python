@@ -33,7 +33,7 @@ class NoteStylesResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/sullyai-api-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/sullyai/sullyai-python#accessing-raw-response-data-eg-headers
         """
         return NoteStylesResourceWithRawResponse(self)
 
@@ -42,15 +42,15 @@ class NoteStylesResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/sullyai-api-python#with_streaming_response
+        For more information, see https://www.github.com/sullyai/sullyai-python#with_streaming_response
         """
         return NoteStylesResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
+        sample_note: str,
         instructions: List[str] | NotGiven = NOT_GIVEN,
-        sample_note: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -62,9 +62,9 @@ class NoteStylesResource(SyncAPIResource):
         Creates a note style
 
         Args:
-          instructions: Optional instructions for note generation
-
           sample_note: Sample note text to base the style on
+
+          instructions: Optional instructions for note generation
 
           extra_headers: Send extra headers
 
@@ -78,8 +78,8 @@ class NoteStylesResource(SyncAPIResource):
             "/v1/note-styles",
             body=maybe_transform(
                 {
-                    "instructions": instructions,
                     "sample_note": sample_note,
+                    "instructions": instructions,
                 },
                 note_style_create_params.NoteStyleCreateParams,
             ),
@@ -97,7 +97,7 @@ class AsyncNoteStylesResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/sullyai-api-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/sullyai/sullyai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncNoteStylesResourceWithRawResponse(self)
 
@@ -106,15 +106,15 @@ class AsyncNoteStylesResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/sullyai-api-python#with_streaming_response
+        For more information, see https://www.github.com/sullyai/sullyai-python#with_streaming_response
         """
         return AsyncNoteStylesResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
+        sample_note: str,
         instructions: List[str] | NotGiven = NOT_GIVEN,
-        sample_note: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -126,9 +126,9 @@ class AsyncNoteStylesResource(AsyncAPIResource):
         Creates a note style
 
         Args:
-          instructions: Optional instructions for note generation
-
           sample_note: Sample note text to base the style on
+
+          instructions: Optional instructions for note generation
 
           extra_headers: Send extra headers
 
@@ -142,8 +142,8 @@ class AsyncNoteStylesResource(AsyncAPIResource):
             "/v1/note-styles",
             body=await async_maybe_transform(
                 {
-                    "instructions": instructions,
                     "sample_note": sample_note,
+                    "instructions": instructions,
                 },
                 note_style_create_params.NoteStyleCreateParams,
             ),

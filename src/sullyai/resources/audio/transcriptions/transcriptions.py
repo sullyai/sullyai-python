@@ -32,6 +32,7 @@ from ...._response import (
 from ....types.audio import transcription_create_params
 from ...._base_client import make_request_options
 from ....types.delete_response import DeleteResponse
+from ....types.audio.transcription_create_response import TranscriptionCreateResponse
 from ....types.audio.transcription_retrieve_response import TranscriptionRetrieveResponse
 
 __all__ = ["TranscriptionsResource", "AsyncTranscriptionsResource"]
@@ -48,7 +49,7 @@ class TranscriptionsResource(SyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/sullyai-api-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/sullyai/sullyai-python#accessing-raw-response-data-eg-headers
         """
         return TranscriptionsResourceWithRawResponse(self)
 
@@ -57,7 +58,7 @@ class TranscriptionsResource(SyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/sullyai-api-python#with_streaming_response
+        For more information, see https://www.github.com/sullyai/sullyai-python#with_streaming_response
         """
         return TranscriptionsResourceWithStreamingResponse(self)
 
@@ -72,7 +73,7 @@ class TranscriptionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> str:
+    ) -> TranscriptionCreateResponse:
         """
         Creates a new audio transcription
 
@@ -112,7 +113,7 @@ class TranscriptionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=str,
+            cast_to=TranscriptionCreateResponse,
         )
 
     def retrieve(
@@ -193,7 +194,7 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
-        For more information, see https://www.github.com/stainless-sdks/sullyai-api-python#accessing-raw-response-data-eg-headers
+        For more information, see https://www.github.com/sullyai/sullyai-python#accessing-raw-response-data-eg-headers
         """
         return AsyncTranscriptionsResourceWithRawResponse(self)
 
@@ -202,7 +203,7 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
-        For more information, see https://www.github.com/stainless-sdks/sullyai-api-python#with_streaming_response
+        For more information, see https://www.github.com/sullyai/sullyai-python#with_streaming_response
         """
         return AsyncTranscriptionsResourceWithStreamingResponse(self)
 
@@ -217,7 +218,7 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> str:
+    ) -> TranscriptionCreateResponse:
         """
         Creates a new audio transcription
 
@@ -257,7 +258,7 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=str,
+            cast_to=TranscriptionCreateResponse,
         )
 
     async def retrieve(
