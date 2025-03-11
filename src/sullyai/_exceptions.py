@@ -18,11 +18,11 @@ __all__ = [
 ]
 
 
-class SullyaiAPIError(Exception):
+class SullyAIError(Exception):
     pass
 
 
-class APIError(SullyaiAPIError):
+class APIError(SullyAIError):
     message: str
     request: httpx.Request
 
