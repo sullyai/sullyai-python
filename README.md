@@ -30,8 +30,8 @@ from sullyai import SullyAI
 client = SullyAI(
     api_key=os.environ.get("SULLYAI_API_KEY"),  # This is the default and can be omitted
     account_id=os.environ.get("SULLYAI_ACCOUNT_ID"),  # This is the default and can be omitted
-    # defaults to "production".
-    environment="environment_1",
+    # defaults to "testing".
+    environment="production",
 )
 
 note = client.notes.retrieve(
@@ -57,8 +57,8 @@ from sullyai import AsyncSullyAI
 client = AsyncSullyAI(
     api_key=os.environ.get("SULLYAI_API_KEY"),  # This is the default and can be omitted
     account_id=os.environ.get("SULLYAI_ACCOUNT_ID"),  # This is the default and can be omitted
-    # defaults to "production".
-    environment="environment_1",
+    # defaults to "testing".
+    environment="production",
 )
 
 

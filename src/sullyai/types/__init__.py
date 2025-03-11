@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from .shared import Section as Section, HeadingSection as HeadingSection
 from .delete_response import DeleteResponse as DeleteResponse
 from .note_create_params import NoteCreateParams as NoteCreateParams
 from .note_create_response import NoteCreateResponse as NoteCreateResponse
