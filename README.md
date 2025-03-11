@@ -1,6 +1,6 @@
 # Sullyai API Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/sullyai_api.svg)](https://pypi.org/project/sullyai_api/)
+[![PyPI version](https://img.shields.io/pypi/v/sullyai.svg)](https://pypi.org/project/sullyai/)
 
 The Sullyai API Python library provides convenient access to the Sullyai API REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -15,12 +15,9 @@ The REST API documentation can be found on [docs.sullyai-api.com](https://docs.s
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/SullyAI/sullyai-python.git
+# install from PyPI
+pip install --pre sullyai
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://app.stainless.com/docs/guides/publish), this will become: `pip install --pre sullyai_api`
 
 ## Usage
 
