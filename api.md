@@ -36,7 +36,7 @@ from sullyai.types.audio import TranscriptionCreateResponse, TranscriptionRetrie
 
 Methods:
 
-- <code title="post /v1/audio/transcriptions">client.audio.transcriptions.<a href="./src/sullyai/resources/audio/transcriptions/transcriptions.py">create</a>(\*\*<a href="src/sullyai/types/audio/transcription_create_params.py">params</a>) -> str</code>
+- <code title="post /v1/audio/transcriptions">client.audio.transcriptions.<a href="./src/sullyai/resources/audio/transcriptions/transcriptions.py">create</a>(\*\*<a href="src/sullyai/types/audio/transcription_create_params.py">params</a>) -> <a href="./src/sullyai/types/audio/transcription_create_response.py">TranscriptionCreateResponse</a></code>
 - <code title="get /v1/audio/transcriptions/{transcriptionId}">client.audio.transcriptions.<a href="./src/sullyai/resources/audio/transcriptions/transcriptions.py">retrieve</a>(transcription_id) -> <a href="./src/sullyai/types/audio/transcription_retrieve_response.py">TranscriptionRetrieveResponse</a></code>
 - <code title="delete /v1/audio/transcriptions/{transcriptionId}">client.audio.transcriptions.<a href="./src/sullyai/resources/audio/transcriptions/transcriptions.py">delete</a>(transcription_id) -> <a href="./src/sullyai/types/delete_response.py">DeleteResponse</a></code>
 

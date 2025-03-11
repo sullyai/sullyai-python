@@ -20,22 +20,26 @@ class TestNoteStyles:
     @pytest.mark.skip()
     @parametrize
     def test_method_create(self, client: SullyAI) -> None:
-        note_style = client.note_styles.create()
-        assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    def test_method_create_with_all_params(self, client: SullyAI) -> None:
         note_style = client.note_styles.create(
-            instructions=["string"],
             sample_note="sampleNote",
         )
         assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
+    def test_method_create_with_all_params(self, client: SullyAI) -> None:
+        note_style = client.note_styles.create(
+            sample_note="sampleNote",
+            instructions=["string"],
+        )
+        assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
     def test_raw_response_create(self, client: SullyAI) -> None:
-        response = client.note_styles.with_raw_response.create()
+        response = client.note_styles.with_raw_response.create(
+            sample_note="sampleNote",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -45,7 +49,9 @@ class TestNoteStyles:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create(self, client: SullyAI) -> None:
-        with client.note_styles.with_streaming_response.create() as response:
+        with client.note_styles.with_streaming_response.create(
+            sample_note="sampleNote",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -61,22 +67,26 @@ class TestAsyncNoteStyles:
     @pytest.mark.skip()
     @parametrize
     async def test_method_create(self, async_client: AsyncSullyAI) -> None:
-        note_style = await async_client.note_styles.create()
-        assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
-
-    @pytest.mark.skip()
-    @parametrize
-    async def test_method_create_with_all_params(self, async_client: AsyncSullyAI) -> None:
         note_style = await async_client.note_styles.create(
-            instructions=["string"],
             sample_note="sampleNote",
         )
         assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncSullyAI) -> None:
+        note_style = await async_client.note_styles.create(
+            sample_note="sampleNote",
+            instructions=["string"],
+        )
+        assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
     async def test_raw_response_create(self, async_client: AsyncSullyAI) -> None:
-        response = await async_client.note_styles.with_raw_response.create()
+        response = await async_client.note_styles.with_raw_response.create(
+            sample_note="sampleNote",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -86,7 +96,9 @@ class TestAsyncNoteStyles:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSullyAI) -> None:
-        async with async_client.note_styles.with_streaming_response.create() as response:
+        async with async_client.note_styles.with_streaming_response.create(
+            sample_note="sampleNote",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
