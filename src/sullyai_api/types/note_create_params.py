@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import datetime
 from typing import List, Union, Optional
-from typing_extensions import Literal, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
@@ -12,11 +12,13 @@ __all__ = ["NoteCreateParams", "NoteType", "PatientInfo"]
 
 
 class NoteCreateParams(TypedDict, total=False):
+    date: Required[Annotated[Union[str, datetime.date], PropertyInfo(format="iso8601")]]
+    """Date of the patient encounter"""
+
+    transcript: Required[str]
+
     context: Optional[str]
     """Additional context for note generation. This field is optional."""
-
-    date: Annotated[Union[str, datetime.date], PropertyInfo(format="iso8601")]
-    """Date of the patient encounter"""
 
     instructions: Optional[List[str]]
     """Special instructions for note generation. This field is optional."""
@@ -34,8 +36,6 @@ class NoteCreateParams(TypedDict, total=False):
 
     previous_note: Annotated[str, PropertyInfo(alias="previousNote")]
     """Reference to a previous note if this is a follow-up. This field is optional."""
-
-    transcript: str
 
 
 class NoteType(TypedDict, total=False):

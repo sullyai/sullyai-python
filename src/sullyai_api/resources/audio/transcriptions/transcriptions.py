@@ -32,6 +32,7 @@ from ...._response import (
 from ....types.audio import transcription_create_params
 from ...._base_client import make_request_options
 from ....types.delete_response import DeleteResponse
+from ....types.audio.transcription_create_response import TranscriptionCreateResponse
 from ....types.audio.transcription_retrieve_response import TranscriptionRetrieveResponse
 
 __all__ = ["TranscriptionsResource", "AsyncTranscriptionsResource"]
@@ -72,7 +73,7 @@ class TranscriptionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> str:
+    ) -> TranscriptionCreateResponse:
         """
         Creates a new audio transcription
 
@@ -112,7 +113,7 @@ class TranscriptionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=str,
+            cast_to=TranscriptionCreateResponse,
         )
 
     def retrieve(
@@ -217,7 +218,7 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> str:
+    ) -> TranscriptionCreateResponse:
         """
         Creates a new audio transcription
 
@@ -257,7 +258,7 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=str,
+            cast_to=TranscriptionCreateResponse,
         )
 
     async def retrieve(

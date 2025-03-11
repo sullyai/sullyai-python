@@ -11,6 +11,7 @@ from sullyai_api import SullyaiAPI, AsyncSullyaiAPI
 from tests.utils import assert_matches_type
 from sullyai_api.types import DeleteResponse
 from sullyai_api.types.audio import (
+    TranscriptionCreateResponse,
     TranscriptionRetrieveResponse,
 )
 
@@ -26,7 +27,7 @@ class TestTranscriptions:
         transcription = client.audio.transcriptions.create(
             audio=b"raw file contents",
         )
-        assert_matches_type(str, transcription, path=["response"])
+        assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -35,7 +36,7 @@ class TestTranscriptions:
             audio=b"raw file contents",
             language="en-US",
         )
-        assert_matches_type(str, transcription, path=["response"])
+        assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -47,7 +48,7 @@ class TestTranscriptions:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         transcription = response.parse()
-        assert_matches_type(str, transcription, path=["response"])
+        assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -59,7 +60,7 @@ class TestTranscriptions:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             transcription = response.parse()
-            assert_matches_type(str, transcription, path=["response"])
+            assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -157,7 +158,7 @@ class TestAsyncTranscriptions:
         transcription = await async_client.audio.transcriptions.create(
             audio=b"raw file contents",
         )
-        assert_matches_type(str, transcription, path=["response"])
+        assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -166,7 +167,7 @@ class TestAsyncTranscriptions:
             audio=b"raw file contents",
             language="en-US",
         )
-        assert_matches_type(str, transcription, path=["response"])
+        assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -178,7 +179,7 @@ class TestAsyncTranscriptions:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         transcription = await response.parse()
-        assert_matches_type(str, transcription, path=["response"])
+        assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -190,7 +191,7 @@ class TestAsyncTranscriptions:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             transcription = await response.parse()
-            assert_matches_type(str, transcription, path=["response"])
+            assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
