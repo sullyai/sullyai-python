@@ -21,15 +21,19 @@ class TestNotes:
     @pytest.mark.skip()
     @parametrize
     def test_method_create(self, client: SullyaiAPI) -> None:
-        note = client.notes.create()
+        note = client.notes.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_method_create_with_all_params(self, client: SullyaiAPI) -> None:
         note = client.notes.create(
-            context="context",
             date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+            context="context",
             instructions=[
                 "Use a professional and concise tone.",
                 "Include key details without unnecessary elaboration.",
@@ -48,14 +52,16 @@ class TestNotes:
                 "name": "name",
             },
             previous_note="previousNote",
-            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_create(self, client: SullyaiAPI) -> None:
-        response = client.notes.with_raw_response.create()
+        response = client.notes.with_raw_response.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -65,7 +71,10 @@ class TestNotes:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_create(self, client: SullyaiAPI) -> None:
-        with client.notes.with_streaming_response.create() as response:
+        with client.notes.with_streaming_response.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -165,15 +174,19 @@ class TestAsyncNotes:
     @pytest.mark.skip()
     @parametrize
     async def test_method_create(self, async_client: AsyncSullyaiAPI) -> None:
-        note = await async_client.notes.create()
+        note = await async_client.notes.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSullyaiAPI) -> None:
         note = await async_client.notes.create(
-            context="context",
             date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+            context="context",
             instructions=[
                 "Use a professional and concise tone.",
                 "Include key details without unnecessary elaboration.",
@@ -192,14 +205,16 @@ class TestAsyncNotes:
                 "name": "name",
             },
             previous_note="previousNote",
-            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSullyaiAPI) -> None:
-        response = await async_client.notes.with_raw_response.create()
+        response = await async_client.notes.with_raw_response.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -209,7 +224,10 @@ class TestAsyncNotes:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSullyaiAPI) -> None:
-        async with async_client.notes.with_streaming_response.create() as response:
+        async with async_client.notes.with_streaming_response.create(
+            date=parse_date("2019-12-27"),
+            transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
