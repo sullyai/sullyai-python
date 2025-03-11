@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from sullyai_api._types import Base64FileInput
-from sullyai_api._utils import (
+from sullyai._types import Base64FileInput
+from sullyai._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from sullyai_api._compat import PYDANTIC_V2
-from sullyai_api._models import BaseModel
+from sullyai._compat import PYDANTIC_V2
+from sullyai._models import BaseModel
 
 _T = TypeVar("_T")
 

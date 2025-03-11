@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from sullyai_api._types import FileTypes
-from sullyai_api._utils import extract_files
+from sullyai._types import FileTypes
+from sullyai._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:
