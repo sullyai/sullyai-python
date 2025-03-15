@@ -612,16 +612,14 @@ class TestSullyAI:
         # explicit environment arg requires explicitness
         with update_env(SULLY_AI_BASE_URL="http://localhost:5000/from/env"):
             with pytest.raises(ValueError, match=r"you must pass base_url=None"):
-                SullyAI(
-                    api_key=api_key, account_id=account_id, _strict_response_validation=True, environment="production"
-                )
+                SullyAI(api_key=api_key, account_id=account_id, _strict_response_validation=True, environment="testing")
 
             client = SullyAI(
                 base_url=None,
                 api_key=api_key,
                 account_id=account_id,
                 _strict_response_validation=True,
-                environment="production",
+                environment="testing",
             )
             assert str(client.base_url).startswith("https://api-testing.sully.ai")
 
@@ -1465,7 +1463,7 @@ class TestAsyncSullyAI:
         with update_env(SULLY_AI_BASE_URL="http://localhost:5000/from/env"):
             with pytest.raises(ValueError, match=r"you must pass base_url=None"):
                 AsyncSullyAI(
-                    api_key=api_key, account_id=account_id, _strict_response_validation=True, environment="production"
+                    api_key=api_key, account_id=account_id, _strict_response_validation=True, environment="testing"
                 )
 
             client = AsyncSullyAI(
@@ -1473,7 +1471,7 @@ class TestAsyncSullyAI:
                 api_key=api_key,
                 account_id=account_id,
                 _strict_response_validation=True,
-                environment="production",
+                environment="testing",
             )
             assert str(client.base_url).startswith("https://api-testing.sully.ai")
 

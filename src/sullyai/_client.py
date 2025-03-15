@@ -47,8 +47,8 @@ __all__ = [
 ]
 
 ENVIRONMENTS: Dict[str, str] = {
-    "production": "https://api-testing.sully.ai",
-    "environment_1": "https://api.sully.ai",
+    "testing": "https://api-testing.sully.ai",
+    "production": "https://api.sully.ai",
 }
 
 
@@ -63,14 +63,14 @@ class SullyAI(SyncAPIClient):
     api_key: str
     account_id: str
 
-    _environment: Literal["production", "environment_1"] | NotGiven
+    _environment: Literal["testing", "production"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
         account_id: str | None = None,
-        environment: Literal["production", "environment_1"] | NotGiven = NOT_GIVEN,
+        environment: Literal["testing", "production"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -131,7 +131,7 @@ class SullyAI(SyncAPIClient):
         elif base_url_env is not None:
             base_url = base_url_env
         else:
-            self._environment = environment = "production"
+            self._environment = environment = "testing"
 
             try:
                 base_url = ENVIRONMENTS[environment]
@@ -163,11 +163,13 @@ class SullyAI(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
+        auth_headers_to_use: dict[str, str] = {}
+
         if self._api_key_auth:
-            return self._api_key_auth
+            auth_headers_to_use.update(self._api_key_auth)
         if self._account_id_auth:
-            return self._account_id_auth
-        return {}
+            auth_headers_to_use.update(self._account_id_auth)
+        return auth_headers_to_use
 
     @property
     def _api_key_auth(self) -> dict[str, str]:
@@ -193,7 +195,7 @@ class SullyAI(SyncAPIClient):
         *,
         api_key: str | None = None,
         account_id: str | None = None,
-        environment: Literal["production", "environment_1"] | None = None,
+        environment: Literal["testing", "production"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -288,14 +290,14 @@ class AsyncSullyAI(AsyncAPIClient):
     api_key: str
     account_id: str
 
-    _environment: Literal["production", "environment_1"] | NotGiven
+    _environment: Literal["testing", "production"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
         account_id: str | None = None,
-        environment: Literal["production", "environment_1"] | NotGiven = NOT_GIVEN,
+        environment: Literal["testing", "production"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -356,7 +358,7 @@ class AsyncSullyAI(AsyncAPIClient):
         elif base_url_env is not None:
             base_url = base_url_env
         else:
-            self._environment = environment = "production"
+            self._environment = environment = "testing"
 
             try:
                 base_url = ENVIRONMENTS[environment]
@@ -388,11 +390,13 @@ class AsyncSullyAI(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
+        auth_headers_to_use: dict[str, str] = {}
+
         if self._api_key_auth:
-            return self._api_key_auth
+            auth_headers_to_use.update(self._api_key_auth)
         if self._account_id_auth:
-            return self._account_id_auth
-        return {}
+            auth_headers_to_use.update(self._account_id_auth)
+        return auth_headers_to_use
 
     @property
     def _api_key_auth(self) -> dict[str, str]:
@@ -418,7 +422,7 @@ class AsyncSullyAI(AsyncAPIClient):
         *,
         api_key: str | None = None,
         account_id: str | None = None,
-        environment: Literal["production", "environment_1"] | None = None,
+        environment: Literal["testing", "production"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,

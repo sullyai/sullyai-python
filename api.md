@@ -1,3 +1,9 @@
+# Shared Types
+
+```python
+from sullyai.types import HeadingSection, Section
+```
+
 # Notes
 
 Types:
