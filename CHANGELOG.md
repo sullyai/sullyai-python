@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2025-03-15)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### Features
+
+* **api:** manual updates ([#8](https://github.com/sullyai/sullyai-python/issues/8)) ([54f0497](https://github.com/sullyai/sullyai-python/commit/54f04979e0e876fe190fadfe68bb8cecd6237a72))
+
+
+### Bug Fixes
+
+* **internal:** fix auth logic with multiple auth methods ([87c827f](https://github.com/sullyai/sullyai-python/commit/87c827f116450eeb00d8403e63ebabcd9480aa84))
+* **types:** handle more discriminated union shapes ([#13](https://github.com/sullyai/sullyai-python/issues/13)) ([600f99e](https://github.com/sullyai/sullyai-python/commit/600f99e19f925090e1c84a84b5924dbf042949a5))
+
+
+### Chores
+
+* **internal:** bump rye to 0.44.0 ([#12](https://github.com/sullyai/sullyai-python/issues/12)) ([c42f1af](https://github.com/sullyai/sullyai-python/commit/c42f1afce0777f34dcbafb05945f36f1a3c147b3))
+* **internal:** codegen related update ([#11](https://github.com/sullyai/sullyai-python/issues/11)) ([a375b35](https://github.com/sullyai/sullyai-python/commit/a375b35378ff93d9fad2c10b15f4f95c82931f2e))
+* **internal:** remove extra empty newlines ([#10](https://github.com/sullyai/sullyai-python/issues/10)) ([75b5335](https://github.com/sullyai/sullyai-python/commit/75b5335faab4995df79c5a210d7a6cb7dc0565c1))
+
 ## 0.1.0-alpha.1 (2025-03-11)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/sullyai/sullyai-python/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)
