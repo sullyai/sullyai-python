@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2025-04-04)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Chores
+
+* fix typos ([#17](https://github.com/sullyai/sullyai-python/issues/17)) ([a9501e3](https://github.com/sullyai/sullyai-python/commit/a9501e3d767d6c51a26e769c9e57f017d97712e9))
+* **internal:** remove trailing character ([#19](https://github.com/sullyai/sullyai-python/issues/19)) ([9d2f872](https://github.com/sullyai/sullyai-python/commit/9d2f872f8651d30a26df4344b6864dab592c1558))
+
 ## 0.1.0-alpha.2 (2025-03-17)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
