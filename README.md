@@ -101,7 +101,7 @@ note = client.notes.create(
         "description": "description",
         "include_json": True,
         "template": "write a standard clinical SOAP note with the following sections: - **Subjective**: Contains detailed HPI. - **Objective**: Contains PE and ROS. - **Assessment**: Contains differential diagnoses with corresponding plans. - **Patient Instructions**: Contains a list of instructions for the patient.",
-        "type": "soap",
+        "type": "note_style",
     },
 )
 print(note.note_type)
