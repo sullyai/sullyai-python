@@ -163,13 +163,7 @@ class SullyAI(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        auth_headers_to_use: dict[str, str] = {}
-
-        if self._api_key_auth:
-            auth_headers_to_use.update(self._api_key_auth)
-        if self._account_id_auth:
-            auth_headers_to_use.update(self._account_id_auth)
-        return auth_headers_to_use
+        return {**self._api_key_auth, **self._account_id_auth}
 
     @property
     def _api_key_auth(self) -> dict[str, str]:
@@ -390,13 +384,7 @@ class AsyncSullyAI(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        auth_headers_to_use: dict[str, str] = {}
-
-        if self._api_key_auth:
-            auth_headers_to_use.update(self._api_key_auth)
-        if self._account_id_auth:
-            auth_headers_to_use.update(self._account_id_auth)
-        return auth_headers_to_use
+        return {**self._api_key_auth, **self._account_id_auth}
 
     @property
     def _api_key_auth(self) -> dict[str, str]:
