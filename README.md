@@ -83,7 +83,7 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
-from sullyai.\_utils import parse_date
+from datetime import date
 
 ## Nested params
 
@@ -95,13 +95,13 @@ from sullyai import SullyAI
 client = SullyAI()
 
 note = client.notes.create(
-    date=parse_date("2019-12-27"),
+    date=date.fromisoformat("2019-12-27"),
     transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
     note_type={
         "description": "description",
         "include_json": True,
         "template": "write a standard clinical SOAP note with the following sections: - **Subjective**: Contains detailed HPI. - **Objective**: Contains PE and ROS. - **Assessment**: Contains differential diagnoses with corresponding plans. - **Patient Instructions**: Contains a list of instructions for the patient.",
-        "type": "soap",
+        "type": "note_style",
     },
 )
 print(note.note_type)
@@ -109,7 +109,7 @@ print(note.note_type)
 
 ## File uploads
 
-Request parameters that correspond to file uploads can be passed as `bytes`, a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.
+Request parameters that correspond to file uploads can be passed as `bytes`, or a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.
 
 ```python
 from pathlib import Path

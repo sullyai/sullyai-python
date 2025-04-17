@@ -1,6 +1,6 @@
 [project]
 name = "sullyai"
-version = "0.1.0-alpha.3"
+version = "0.1.0-alpha.4"
 description = "The official Python library for the SullyAI API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -42,7 +42,7 @@ Repository = "https://github.com/sullyai/sullyai-python"
 managed = true
 # version pins are in requirements-dev.lock
 dev-dependencies = [
-    "pyright>=1.1.359",
+    "pyright==1.1.399",
     "mypy",
     "respx",
     "pytest",
@@ -147,6 +147,7 @@ exclude = [
 ]
 
 reportImplicitOverride = true
+reportOverlappingOverload = false
 
 reportImportCycles = false
 reportPrivateUsage = false
