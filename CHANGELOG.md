@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2025-04-17)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Bug Fixes
+
+* **client:** send all configured auth headers ([#20](https://github.com/sullyai/sullyai-python/issues/20)) ([dfba406](https://github.com/sullyai/sullyai-python/commit/dfba406bf81aab6de85671f7a43917bcf3f51a3a))
+* **perf:** optimize some hot paths ([edfb8c1](https://github.com/sullyai/sullyai-python/commit/edfb8c1a69b0539b4a3a5fe10bea8f9528e579d6))
+* **perf:** skip traversing types for NotGiven values ([7c65999](https://github.com/sullyai/sullyai-python/commit/7c65999995d97828971b73c1ec16f40df575af23))
+
+
+### Chores
+
+* **client:** minor internal fixes ([13c30ec](https://github.com/sullyai/sullyai-python/commit/13c30ec08268481f4185ef550e3f900f26ebe980))
+* **internal:** base client updates ([0e838b2](https://github.com/sullyai/sullyai-python/commit/0e838b2193187b81ccf3e937dbe63a8f6595341f))
+* **internal:** bump pyright version ([d9a1544](https://github.com/sullyai/sullyai-python/commit/d9a1544a1614f8c720322989e432119e2743ce42))
+* **internal:** expand CI branch coverage ([9230e0b](https://github.com/sullyai/sullyai-python/commit/9230e0b69b429ffdaa501dc0631e5ca05c7e4150))
+* **internal:** reduce CI branch coverage ([41c7753](https://github.com/sullyai/sullyai-python/commit/41c7753a24ae6cc6f427ab5a45bdf413d4535e05))
+* **internal:** slight transform perf improvement ([#22](https://github.com/sullyai/sullyai-python/issues/22)) ([654e7a1](https://github.com/sullyai/sullyai-python/commit/654e7a1f26429787401ee17e42605ecdc96ea152))
+* **internal:** update pyright settings ([710964f](https://github.com/sullyai/sullyai-python/commit/710964f01c5dc1acdbe3716737ad5c518a89cdf9))
+* slight wording improvement in README ([#24](https://github.com/sullyai/sullyai-python/issues/24)) ([34fdf54](https://github.com/sullyai/sullyai-python/commit/34fdf545225208c6bcbd686f031b1e33cf6bd811))
+* **tests:** improve enum examples ([#23](https://github.com/sullyai/sullyai-python/issues/23)) ([e6d8300](https://github.com/sullyai/sullyai-python/commit/e6d8300119ae8f9112f12c1ca59dc30a58fc9a48))
+
+
+### Documentation
+
+* remove private imports from datetime snippets ([11d21d1](https://github.com/sullyai/sullyai-python/commit/11d21d11679ca613ee3eacbb6ab63beb701992f2))
+
 ## 0.1.0-alpha.3 (2025-04-04)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
