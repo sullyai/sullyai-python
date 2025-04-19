@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2025-04-19)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Chores
+
+* **internal:** update models test ([6d5f6ee](https://github.com/sullyai/sullyai-python/commit/6d5f6ee09f35343d00b9e45ef6c882fa4bb8395b))
+
 ## 0.1.0-alpha.5 (2025-04-17)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
