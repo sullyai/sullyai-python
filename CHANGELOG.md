@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2025-04-24)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Bug Fixes
+
+* **pydantic v1:** more robust ModelField.annotation check ([35b7fb9](https://github.com/sullyai/sullyai-python/commit/35b7fb9d7ccf668fd043ef1a9b26e67eaa314ef7))
+
+
+### Chores
+
+* broadly detect json family of content-type headers ([3477834](https://github.com/sullyai/sullyai-python/commit/34778348143b37d0937dad81c5d5043687cc98df))
+* **ci:** add timeout thresholds for CI jobs ([e611549](https://github.com/sullyai/sullyai-python/commit/e6115494293145b19d6c08a26dbdbcd3a60f9c8e))
+* **ci:** only use depot for staging repos ([38a5ab4](https://github.com/sullyai/sullyai-python/commit/38a5ab43196d5c4482f5990059e7a48d02f66040))
+* **internal:** codegen related update ([3d5c7ea](https://github.com/sullyai/sullyai-python/commit/3d5c7ea34300a1b0fdc5caf1ae1e4acae6e6db7e))
+* **internal:** fix list file params ([220314c](https://github.com/sullyai/sullyai-python/commit/220314c7708ccced412a9f3f6b44eca63bfc77b6))
+* **internal:** import reformatting ([ee6c5f5](https://github.com/sullyai/sullyai-python/commit/ee6c5f540cfa2d1311c6ae5c422e4e900a420d6d))
+* **internal:** refactor retries to not use recursion ([9d3f457](https://github.com/sullyai/sullyai-python/commit/9d3f457ca729d30315f44ea1ed5e1028c8cb5252))
+* **internal:** update models test ([6d5f6ee](https://github.com/sullyai/sullyai-python/commit/6d5f6ee09f35343d00b9e45ef6c882fa4bb8395b))
+
 ## 0.1.0-alpha.5 (2025-04-17)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
