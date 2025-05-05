@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2025-05-05)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### Features
+
+* **api:** api update ([1c4cb2a](https://github.com/sullyai/sullyai-python/commit/1c4cb2a355cbbb18905e963974374de72e72c38e))
+
 ## 0.1.0-alpha.6 (2025-04-24)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
