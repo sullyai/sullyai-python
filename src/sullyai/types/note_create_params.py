@@ -16,6 +16,7 @@ class NoteCreateParams(TypedDict, total=False):
     """Date of the patient encounter"""
 
     transcript: Required[str]
+    """The raw medical transcript text to be processed into a clinical note"""
 
     context: Optional[str]
     """Additional context for note generation. This field is optional."""
@@ -30,6 +31,7 @@ class NoteCreateParams(TypedDict, total=False):
     """
 
     note_type: Annotated[NoteType, PropertyInfo(alias="noteType")]
+    """Configuration object specifying the style and format of the generated note"""
 
     patient_info: Annotated[PatientInfo, PropertyInfo(alias="patientInfo")]
     """Optional patient information"""
@@ -71,7 +73,10 @@ class NoteType(TypedDict, total=False):
 
 class PatientInfo(TypedDict, total=False):
     date_of_birth: Annotated[Union[str, datetime.date], PropertyInfo(alias="dateOfBirth", format="iso8601")]
+    """Patient's date of birth in ISO-8601 format (YYYY-MM-DD)"""
 
     gender: Literal["male", "female", "other", "prefer not to say", "unspecified"]
+    """Patient's gender identity"""
 
     name: str
+    """Patient's full name"""

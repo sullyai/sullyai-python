@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.8 (2025-05-09)
+
+Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
+
+### Features
+
+* **api:** api update ([691dd06](https://github.com/sullyai/sullyai-python/commit/691dd06a42664388cbd7560595e07f5c2b8dc965))
+* **api:** api update ([43f673e](https://github.com/sullyai/sullyai-python/commit/43f673e822cfb26d7b30dc37312ce7c5cb20c8ee))
+
+
+### Chores
+
+* **internal:** avoid errors for isinstance checks on proxies ([bbbe0e1](https://github.com/sullyai/sullyai-python/commit/bbbe0e1cd5ac93d1953a1051f89254f6f53dc299))
+
 ## 0.1.0-alpha.7 (2025-05-05)
 
 Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
