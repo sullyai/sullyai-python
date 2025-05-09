@@ -70,12 +70,16 @@ class NotesResource(SyncAPIResource):
         Args:
           date: Date of the patient encounter
 
+          transcript: The raw medical transcript text to be processed into a clinical note
+
           context: Additional context for note generation. This field is optional.
 
           instructions: Special instructions for note generation. This field is optional.
 
           medication_list: List of up to 50 medications (comma separated) to use as reference for fixing
               spelling errors. This field is optional.
+
+          note_type: Configuration object specifying the style and format of the generated note
 
           patient_info: Optional patient information
 
@@ -221,12 +225,16 @@ class AsyncNotesResource(AsyncAPIResource):
         Args:
           date: Date of the patient encounter
 
+          transcript: The raw medical transcript text to be processed into a clinical note
+
           context: Additional context for note generation. This field is optional.
 
           instructions: Special instructions for note generation. This field is optional.
 
           medication_list: List of up to 50 medications (comma separated) to use as reference for fixing
               spelling errors. This field is optional.
+
+          note_type: Configuration object specifying the style and format of the generated note
 
           patient_info: Optional patient information
 
