@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0-alpha.9 (2025-05-17)
+
+Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
+
+### Bug Fixes
+
+* **package:** support direct resource imports ([6c3dade](https://github.com/sullyai/sullyai-python/commit/6c3dadec90580ad7d9a3756a85ed6b3f87f66acd))
+
+
+### Chores
+
+* **ci:** fix installation instructions ([e1cc82b](https://github.com/sullyai/sullyai-python/commit/e1cc82b1d638c5a401dd8667b062fd6a7d1d12f9))
+* **ci:** upload sdks to package manager ([3f1f0cc](https://github.com/sullyai/sullyai-python/commit/3f1f0ccccfbe3fea63451de7ed1181d5284014b3))
+* **internal:** codegen related update ([e673cb3](https://github.com/sullyai/sullyai-python/commit/e673cb3657cbe818073d9800067d0e3db7fd46d0))
+
 ## 0.1.0-alpha.8 (2025-05-09)
 
 Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
