@@ -97,12 +97,7 @@ client = SullyAI()
 note = client.notes.create(
     date=date.fromisoformat("2019-12-27"),
     transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
-    note_type={
-        "description": "description",
-        "include_json": True,
-        "template": "write a standard clinical SOAP note with the following sections: - **Subjective**: Contains detailed HPI. - **Objective**: Contains PE and ROS. - **Assessment**: Contains differential diagnoses with corresponding plans. - **Patient Instructions**: Contains a list of instructions for the patient.",
-        "type": "note_style",
-    },
+    note_type={},
 )
 print(note.note_type)
 ```
