@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-alpha.9 (2025-06-03)
+
+Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
+
+### Bug Fixes
+
+* **package:** support direct resource imports ([6c3dade](https://github.com/sullyai/sullyai-python/commit/6c3dadec90580ad7d9a3756a85ed6b3f87f66acd))
+
+
+### Chores
+
+* **ci:** fix installation instructions ([e1cc82b](https://github.com/sullyai/sullyai-python/commit/e1cc82b1d638c5a401dd8667b062fd6a7d1d12f9))
+* **ci:** upload sdks to package manager ([3f1f0cc](https://github.com/sullyai/sullyai-python/commit/3f1f0ccccfbe3fea63451de7ed1181d5284014b3))
+* **docs:** grammar improvements ([b412bb6](https://github.com/sullyai/sullyai-python/commit/b412bb642de28f72bfc14a390d5cb382fe2591fe))
+* **docs:** remove reference to rye shell ([fafb9d0](https://github.com/sullyai/sullyai-python/commit/fafb9d0e7d91b6634fc5f21153c74abf9157b9a8))
+* **docs:** remove unnecessary param examples ([a9b5eca](https://github.com/sullyai/sullyai-python/commit/a9b5eca7cfd0af9e0b14d152b8c012c8deff00fc))
+* **internal:** codegen related update ([e673cb3](https://github.com/sullyai/sullyai-python/commit/e673cb3657cbe818073d9800067d0e3db7fd46d0))
+
 ## 0.1.0-alpha.8 (2025-05-09)
 
 Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
