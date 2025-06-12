@@ -24,6 +24,13 @@ class NoteCreateParams(TypedDict, total=False):
     instructions: Optional[List[str]]
     """Special instructions for note generation. This field is optional."""
 
+    language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"]
+    """Language code for the transcript content.
+
+    While multiple languages are supported, English ('en') is recommended for
+    optimal output quality and accuracy.
+    """
+
     medication_list: Annotated[str, PropertyInfo(alias="medicationList")]
     """
     List of up to 50 medications (comma separated) to use as reference for fixing
