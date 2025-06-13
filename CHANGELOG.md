@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-alpha.10 (2025-06-13)
+
+Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
+
+### Features
+
+* **api:** api update ([d2fc1a2](https://github.com/sullyai/sullyai-python/commit/d2fc1a2318b474e59bfdecb32a38da67bc67af71))
+
+
+### Bug Fixes
+
+* **client:** correctly parse binary response | stream ([aa58fe0](https://github.com/sullyai/sullyai-python/commit/aa58fe010963b67a6a61fbd7969c2d7e1c04256b))
+
+
+### Chores
+
+* **tests:** run tests in parallel ([9546588](https://github.com/sullyai/sullyai-python/commit/95465889cc3bf6215ca2cc056bc57326dc66471a))
+
 ## 0.1.0-alpha.9 (2025-06-03)
 
 Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
