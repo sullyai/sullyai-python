@@ -39,6 +39,7 @@ class TestNotes:
                 "Include key details without unnecessary elaboration.",
                 "Ensure clarity for a general audience.",
             ],
+            language="en",
             medication_list="medicationList",
             note_type={
                 "description": "description",
@@ -192,6 +193,7 @@ class TestAsyncNotes:
                 "Include key details without unnecessary elaboration.",
                 "Ensure clarity for a general audience.",
             ],
+            language="en",
             medication_list="medicationList",
             note_type={
                 "description": "description",
