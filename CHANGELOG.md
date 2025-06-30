@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.1.0-alpha.10 (2025-06-30)
+
+Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
+
+### Features
+
+* **api:** api update ([d2fc1a2](https://github.com/sullyai/sullyai-python/commit/d2fc1a2318b474e59bfdecb32a38da67bc67af71))
+* **client:** add support for aiohttp ([9d10831](https://github.com/sullyai/sullyai-python/commit/9d108315ee49f8c294f8a3cf1873173533aff61f))
+
+
+### Bug Fixes
+
+* **ci:** correct conditional ([2ff62e4](https://github.com/sullyai/sullyai-python/commit/2ff62e4c4d0ed172ec33d1b9c68eb0a5f00566cd))
+* **ci:** release-doctor — report correct token name ([e184c1a](https://github.com/sullyai/sullyai-python/commit/e184c1a717647284be506768306702b61acfc2df))
+* **client:** correctly parse binary response | stream ([aa58fe0](https://github.com/sullyai/sullyai-python/commit/aa58fe010963b67a6a61fbd7969c2d7e1c04256b))
+* **tests:** fix: tests which call HTTP endpoints directly with the example parameters ([1f655ab](https://github.com/sullyai/sullyai-python/commit/1f655ab4a42b1d4fcb3d19e36abfb08f676ea9a5))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([571f35c](https://github.com/sullyai/sullyai-python/commit/571f35c2da8296dd7656aaa1875497195798ec0f))
+* **ci:** only run for pushes and fork pull requests ([e21efba](https://github.com/sullyai/sullyai-python/commit/e21efba5b3288773e4faf67b2389cb10c269ffdf))
+* **internal:** update conftest.py ([ab70263](https://github.com/sullyai/sullyai-python/commit/ab70263395bf39559bf6559e55395cb93db3f39b))
+* **readme:** update badges ([9e35244](https://github.com/sullyai/sullyai-python/commit/9e3524481bb9a31afbbed51cc8dd7afa5bebd480))
+* **tests:** add tests for httpx client instantiation & proxies ([57c7d56](https://github.com/sullyai/sullyai-python/commit/57c7d56e0e6af93add9a774d66ffbafb462cc998))
+* **tests:** run tests in parallel ([9546588](https://github.com/sullyai/sullyai-python/commit/95465889cc3bf6215ca2cc056bc57326dc66471a))
+* **tests:** skip some failing tests on the latest python versions ([ae75e81](https://github.com/sullyai/sullyai-python/commit/ae75e818ff66f17854e8a2dfcb0d19464d809813))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([a9d1182](https://github.com/sullyai/sullyai-python/commit/a9d11825d69c705c17f492fd56c5635596305914))
+
 ## 0.1.0-alpha.9 (2025-06-03)
 
 Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
