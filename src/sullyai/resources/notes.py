@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import List, Union, Optional
 from datetime import date
+from typing_extensions import Literal
 
 import httpx
 
@@ -53,6 +54,7 @@ class NotesResource(SyncAPIResource):
         transcript: str,
         context: Optional[str] | NotGiven = NOT_GIVEN,
         instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | NotGiven = NOT_GIVEN,
         medication_list: str | NotGiven = NOT_GIVEN,
         note_type: note_create_params.NoteType | NotGiven = NOT_GIVEN,
         patient_info: note_create_params.PatientInfo | NotGiven = NOT_GIVEN,
@@ -75,6 +77,10 @@ class NotesResource(SyncAPIResource):
           context: Additional context for note generation. This field is optional.
 
           instructions: Special instructions for note generation. This field is optional.
+
+          language: Language code for the transcript content. While multiple languages are
+              supported, English ('en') is recommended for optimal output quality and
+              accuracy.
 
           medication_list: List of up to 50 medications (comma separated) to use as reference for fixing
               spelling errors. This field is optional.
@@ -101,6 +107,7 @@ class NotesResource(SyncAPIResource):
                     "transcript": transcript,
                     "context": context,
                     "instructions": instructions,
+                    "language": language,
                     "medication_list": medication_list,
                     "note_type": note_type,
                     "patient_info": patient_info,
@@ -208,6 +215,7 @@ class AsyncNotesResource(AsyncAPIResource):
         transcript: str,
         context: Optional[str] | NotGiven = NOT_GIVEN,
         instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | NotGiven = NOT_GIVEN,
         medication_list: str | NotGiven = NOT_GIVEN,
         note_type: note_create_params.NoteType | NotGiven = NOT_GIVEN,
         patient_info: note_create_params.PatientInfo | NotGiven = NOT_GIVEN,
@@ -230,6 +238,10 @@ class AsyncNotesResource(AsyncAPIResource):
           context: Additional context for note generation. This field is optional.
 
           instructions: Special instructions for note generation. This field is optional.
+
+          language: Language code for the transcript content. While multiple languages are
+              supported, English ('en') is recommended for optimal output quality and
+              accuracy.
 
           medication_list: List of up to 50 medications (comma separated) to use as reference for fixing
               spelling errors. This field is optional.
@@ -256,6 +268,7 @@ class AsyncNotesResource(AsyncAPIResource):
                     "transcript": transcript,
                     "context": context,
                     "instructions": instructions,
+                    "language": language,
                     "medication_list": medication_list,
                     "note_type": note_type,
                     "patient_info": patient_info,

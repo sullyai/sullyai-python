@@ -39,6 +39,7 @@ class TestNotes:
                 "Include key details without unnecessary elaboration.",
                 "Ensure clarity for a general audience.",
             ],
+            language="en",
             medication_list="medicationList",
             note_type={
                 "description": "description",
@@ -169,7 +170,9 @@ class TestNotes:
 
 
 class TestAsyncNotes:
-    parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
 
     @pytest.mark.skip()
     @parametrize
@@ -192,6 +195,7 @@ class TestAsyncNotes:
                 "Include key details without unnecessary elaboration.",
                 "Ensure clarity for a general audience.",
             ],
+            language="en",
             medication_list="medicationList",
             note_type={
                 "description": "description",
