@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.11 (2025-07-02)
+
+Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
+
+### Chores
+
+* **ci:** change upload type ([70e2568](https://github.com/sullyai/sullyai-python/commit/70e2568ac8bfa37dab0c936aacf61494f5950378))
+
 ## 0.1.0-alpha.10 (2025-06-30)
 
 Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
