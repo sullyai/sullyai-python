@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-alpha.11 (2025-07-15)
+
+Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
+
+### Bug Fixes
+
+* **client:** don't send Content-Type header on GET requests ([f3482ae](https://github.com/sullyai/sullyai-python/commit/f3482ae50b9ada914bef67cf30a1f9935ebe8d28))
+* **parsing:** correctly handle nested discriminated unions ([9ee4101](https://github.com/sullyai/sullyai-python/commit/9ee410105d81f0f4eb142486d41013a6dc12b75f))
+
+
+### Chores
+
+* **ci:** change upload type ([70e2568](https://github.com/sullyai/sullyai-python/commit/70e2568ac8bfa37dab0c936aacf61494f5950378))
+* **internal:** bump pinned h11 dep ([6b3d904](https://github.com/sullyai/sullyai-python/commit/6b3d90412382e5801da1a07e87cc97789601e679))
+* **internal:** codegen related update ([2749b0e](https://github.com/sullyai/sullyai-python/commit/2749b0e54545d9e56361239962d1ada407e08124))
+* **package:** mark python 3.13 as supported ([1471f9b](https://github.com/sullyai/sullyai-python/commit/1471f9b03ab5733e00dabaf7d730c90c834755d8))
+* **readme:** fix version rendering on pypi ([513c235](https://github.com/sullyai/sullyai-python/commit/513c235fa5fd7af443ad75bc1dc8229a92c2cc9a))
+
 ## 0.1.0-alpha.10 (2025-06-30)
 
 Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
