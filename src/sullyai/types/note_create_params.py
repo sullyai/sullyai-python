@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import datetime
 from typing import List, Union, Optional
+from datetime import date
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
@@ -12,14 +12,17 @@ __all__ = ["NoteCreateParams", "NoteType", "PatientInfo"]
 
 
 class NoteCreateParams(TypedDict, total=False):
-    date: Required[Annotated[Union[str, datetime.date], PropertyInfo(format="iso8601")]]
-    """Date of the patient encounter"""
-
     transcript: Required[str]
     """The raw medical transcript text to be processed into a clinical note"""
 
     context: Optional[str]
     """Additional context for note generation. This field is optional."""
+
+    date: str
+    """
+    Date of the patient encounter in ISO format (YYYY-MM-DD) or ISO datetime format
+    (YYYY-MM-DDTHH:mm:ssZ)
+    """
 
     instructions: Optional[List[str]]
     """Special instructions for note generation. This field is optional."""
@@ -79,7 +82,7 @@ class NoteType(TypedDict, total=False):
 
 
 class PatientInfo(TypedDict, total=False):
-    date_of_birth: Annotated[Union[str, datetime.date], PropertyInfo(alias="dateOfBirth", format="iso8601")]
+    date_of_birth: Annotated[Union[str, date], PropertyInfo(alias="dateOfBirth", format="iso8601")]
     """Patient's date of birth in ISO-8601 format (YYYY-MM-DD)"""
 
     gender: Literal["male", "female", "other", "prefer not to say", "unspecified"]
