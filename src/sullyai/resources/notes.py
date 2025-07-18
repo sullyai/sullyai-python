@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Optional
-from datetime import date
+from typing import List, Optional
 from typing_extensions import Literal
 
 import httpx
@@ -50,9 +49,9 @@ class NotesResource(SyncAPIResource):
     def create(
         self,
         *,
-        date: Union[str, date],
         transcript: str,
         context: Optional[str] | NotGiven = NOT_GIVEN,
+        date: str | NotGiven = NOT_GIVEN,
         instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
         language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | NotGiven = NOT_GIVEN,
         medication_list: str | NotGiven = NOT_GIVEN,
@@ -70,11 +69,12 @@ class NotesResource(SyncAPIResource):
         Creates a new note
 
         Args:
-          date: Date of the patient encounter
-
           transcript: The raw medical transcript text to be processed into a clinical note
 
           context: Additional context for note generation. This field is optional.
+
+          date: Date of the patient encounter in ISO format (YYYY-MM-DD) or ISO datetime format
+              (YYYY-MM-DDTHH:mm:ssZ)
 
           instructions: Special instructions for note generation. This field is optional.
 
@@ -103,9 +103,9 @@ class NotesResource(SyncAPIResource):
             "/v1/notes",
             body=maybe_transform(
                 {
-                    "date": date,
                     "transcript": transcript,
                     "context": context,
+                    "date": date,
                     "instructions": instructions,
                     "language": language,
                     "medication_list": medication_list,
@@ -211,9 +211,9 @@ class AsyncNotesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        date: Union[str, date],
         transcript: str,
         context: Optional[str] | NotGiven = NOT_GIVEN,
+        date: str | NotGiven = NOT_GIVEN,
         instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
         language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | NotGiven = NOT_GIVEN,
         medication_list: str | NotGiven = NOT_GIVEN,
@@ -231,11 +231,12 @@ class AsyncNotesResource(AsyncAPIResource):
         Creates a new note
 
         Args:
-          date: Date of the patient encounter
-
           transcript: The raw medical transcript text to be processed into a clinical note
 
           context: Additional context for note generation. This field is optional.
+
+          date: Date of the patient encounter in ISO format (YYYY-MM-DD) or ISO datetime format
+              (YYYY-MM-DDTHH:mm:ssZ)
 
           instructions: Special instructions for note generation. This field is optional.
 
@@ -264,9 +265,9 @@ class AsyncNotesResource(AsyncAPIResource):
             "/v1/notes",
             body=await async_maybe_transform(
                 {
-                    "date": date,
                     "transcript": transcript,
                     "context": context,
+                    "date": date,
                     "instructions": instructions,
                     "language": language,
                     "medication_list": medication_list,

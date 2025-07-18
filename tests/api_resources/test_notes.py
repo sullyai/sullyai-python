@@ -22,7 +22,6 @@ class TestNotes:
     @parametrize
     def test_method_create(self, client: SullyAI) -> None:
         note = client.notes.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
@@ -31,9 +30,9 @@ class TestNotes:
     @parametrize
     def test_method_create_with_all_params(self, client: SullyAI) -> None:
         note = client.notes.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
             context="context",
+            date="3216-99-02T56:01:57Z",
             instructions=[
                 "Use a professional and concise tone.",
                 "Include key details without unnecessary elaboration.",
@@ -60,7 +59,6 @@ class TestNotes:
     @parametrize
     def test_raw_response_create(self, client: SullyAI) -> None:
         response = client.notes.with_raw_response.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
 
@@ -73,7 +71,6 @@ class TestNotes:
     @parametrize
     def test_streaming_response_create(self, client: SullyAI) -> None:
         with client.notes.with_streaming_response.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         ) as response:
             assert not response.is_closed
@@ -178,7 +175,6 @@ class TestAsyncNotes:
     @parametrize
     async def test_method_create(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
@@ -187,9 +183,9 @@ class TestAsyncNotes:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
             context="context",
+            date="3216-99-02T56:01:57Z",
             instructions=[
                 "Use a professional and concise tone.",
                 "Include key details without unnecessary elaboration.",
@@ -216,7 +212,6 @@ class TestAsyncNotes:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.notes.with_raw_response.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
 
@@ -229,7 +224,6 @@ class TestAsyncNotes:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSullyAI) -> None:
         async with async_client.notes.with_streaming_response.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         ) as response:
             assert not response.is_closed
