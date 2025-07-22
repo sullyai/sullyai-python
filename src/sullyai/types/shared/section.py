@@ -124,14 +124,3 @@ else:
     Section: TypeAlias = Union["HeadingSection", UnionMember1, UnionMember2]
 
 from .heading_section import HeadingSection
-
-if PYDANTIC_V2:
-    UnionMember1.model_rebuild()
-    UnionMember1Properties.model_rebuild()
-    UnionMember2.model_rebuild()
-    UnionMember2Properties.model_rebuild()
-else:
-    UnionMember1.update_forward_refs()  # type: ignore
-    UnionMember1Properties.update_forward_refs()  # type: ignore
-    UnionMember2.update_forward_refs()  # type: ignore
-    UnionMember2Properties.update_forward_refs()  # type: ignore

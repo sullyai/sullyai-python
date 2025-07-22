@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import List, Optional
 from typing_extensions import Literal
 
-from ..._compat import PYDANTIC_V2
 from ..._models import BaseModel
 
 __all__ = ["HeadingSection"]
@@ -28,8 +27,3 @@ class HeadingSection(BaseModel):
 
 
 from .section import Section
-
-if PYDANTIC_V2:
-    HeadingSection.model_rebuild()
-else:
-    HeadingSection.update_forward_refs()  # type: ignore
