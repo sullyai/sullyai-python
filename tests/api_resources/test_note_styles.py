@@ -17,7 +17,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestNoteStyles:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: SullyAI) -> None:
         note_style = client.note_styles.create(
@@ -25,7 +25,7 @@ class TestNoteStyles:
         )
         assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: SullyAI) -> None:
         note_style = client.note_styles.create(
@@ -34,7 +34,7 @@ class TestNoteStyles:
         )
         assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: SullyAI) -> None:
         response = client.note_styles.with_raw_response.create(
@@ -46,7 +46,7 @@ class TestNoteStyles:
         note_style = response.parse()
         assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: SullyAI) -> None:
         with client.note_styles.with_streaming_response.create(
@@ -66,7 +66,7 @@ class TestAsyncNoteStyles:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncSullyAI) -> None:
         note_style = await async_client.note_styles.create(
@@ -74,7 +74,7 @@ class TestAsyncNoteStyles:
         )
         assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSullyAI) -> None:
         note_style = await async_client.note_styles.create(
@@ -83,7 +83,7 @@ class TestAsyncNoteStyles:
         )
         assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.note_styles.with_raw_response.create(
@@ -95,7 +95,7 @@ class TestAsyncNoteStyles:
         note_style = await response.parse()
         assert_matches_type(NoteStyleCreateResponse, note_style, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSullyAI) -> None:
         async with async_client.note_styles.with_streaming_response.create(
