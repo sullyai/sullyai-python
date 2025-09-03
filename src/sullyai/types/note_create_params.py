@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Optional
+from typing import Union, Optional
 from datetime import date
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = ["NoteCreateParams", "NoteType", "PatientInfo"]
@@ -24,7 +25,7 @@ class NoteCreateParams(TypedDict, total=False):
     (YYYY-MM-DDTHH:mm:ssZ)
     """
 
-    instructions: Optional[List[str]]
+    instructions: Optional[SequenceNotStr[str]]
     """Special instructions for note generation. This field is optional."""
 
     language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"]
