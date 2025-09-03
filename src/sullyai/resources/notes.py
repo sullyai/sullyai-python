@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from typing_extensions import Literal
 
 import httpx
 
 from ..types import note_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -52,7 +52,7 @@ class NotesResource(SyncAPIResource):
         transcript: str,
         context: Optional[str] | NotGiven = NOT_GIVEN,
         date: str | NotGiven = NOT_GIVEN,
-        instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        instructions: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | NotGiven = NOT_GIVEN,
         medication_list: str | NotGiven = NOT_GIVEN,
         note_type: note_create_params.NoteType | NotGiven = NOT_GIVEN,
@@ -214,7 +214,7 @@ class AsyncNotesResource(AsyncAPIResource):
         transcript: str,
         context: Optional[str] | NotGiven = NOT_GIVEN,
         date: str | NotGiven = NOT_GIVEN,
-        instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
+        instructions: Optional[SequenceNotStr[str]] | NotGiven = NOT_GIVEN,
         language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | NotGiven = NOT_GIVEN,
         medication_list: str | NotGiven = NOT_GIVEN,
         note_type: note_create_params.NoteType | NotGiven = NOT_GIVEN,
