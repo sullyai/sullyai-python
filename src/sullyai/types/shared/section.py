@@ -7,7 +7,7 @@ from typing_extensions import Literal, TypeAlias, TypeAliasType
 
 from pydantic import Field as FieldInfo
 
-from ..._compat import PYDANTIC_V2
+from ..._compat import PYDANTIC_V1
 from ..._models import BaseModel
 
 __all__ = ["Section", "UnionMember1", "UnionMember1Properties", "UnionMember2", "UnionMember2Properties"]
@@ -118,7 +118,7 @@ class UnionMember2(BaseModel):
     type: Optional[Literal["list", "heading", "text"]] = None
 
 
-if TYPE_CHECKING or PYDANTIC_V2:
+if TYPE_CHECKING or not PYDANTIC_V1:
     Section = TypeAliasType("Section", Union["HeadingSection", UnionMember1, UnionMember2])
 else:
     Section: TypeAlias = Union["HeadingSection", UnionMember1, UnionMember2]

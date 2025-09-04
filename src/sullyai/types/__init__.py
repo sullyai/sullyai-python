@@ -16,7 +16,7 @@ from .note_style_create_response import NoteStyleCreateResponse as NoteStyleCrea
 # This ensures that, when building the deferred (due to cyclical references) model schema,
 # Pydantic can resolve the necessary references.
 # See: https://github.com/pydantic/pydantic/issues/11250 for more context.
-if _compat.PYDANTIC_V2:
-    shared.heading_section.HeadingSection.model_rebuild(_parent_namespace_depth=0)
-else:
+if _compat.PYDANTIC_V1:
     shared.heading_section.HeadingSection.update_forward_refs()  # type: ignore
+else:
+    shared.heading_section.HeadingSection.model_rebuild(_parent_namespace_depth=0)
