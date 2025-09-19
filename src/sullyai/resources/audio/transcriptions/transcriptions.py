@@ -14,7 +14,7 @@ from .stream import (
     StreamResourceWithStreamingResponse,
     AsyncStreamResourceWithStreamingResponse,
 )
-from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from ...._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from ...._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from ...._compat import cached_property
 from ...._resource import SyncAPIResource, AsyncAPIResource
@@ -61,13 +61,13 @@ class TranscriptionsResource(SyncAPIResource):
         self,
         *,
         audio: FileTypes,
-        language: str | NotGiven = NOT_GIVEN,
+        language: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TranscriptionCreateResponse:
         """
         Creates a new audio transcription
@@ -120,7 +120,7 @@ class TranscriptionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TranscriptionRetrieveResponse:
         """
         Gets a single audio transcription based on the ID supplied
@@ -153,7 +153,7 @@ class TranscriptionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeleteResponse:
         """
         Deletes a single audio transcription based on the ID supplied
@@ -206,13 +206,13 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
         self,
         *,
         audio: FileTypes,
-        language: str | NotGiven = NOT_GIVEN,
+        language: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TranscriptionCreateResponse:
         """
         Creates a new audio transcription
@@ -265,7 +265,7 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TranscriptionRetrieveResponse:
         """
         Gets a single audio transcription based on the ID supplied
@@ -298,7 +298,7 @@ class AsyncTranscriptionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeleteResponse:
         """
         Deletes a single audio transcription based on the ID supplied
