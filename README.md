@@ -89,6 +89,7 @@ pip install --pre sullyai[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from sullyai import DefaultAioHttpClient
 from sullyai import AsyncSullyAI
@@ -96,8 +97,8 @@ from sullyai import AsyncSullyAI
 
 async def main() -> None:
     async with AsyncSullyAI(
-        api_key="My API Key",
-        account_id="My Account ID",
+        api_key=os.environ.get("SULLYAI_API_KEY"),  # This is the default and can be omitted
+        account_id=os.environ.get("SULLYAI_ACCOUNT_ID"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         note = await client.notes.retrieve(
