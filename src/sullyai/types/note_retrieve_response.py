@@ -11,6 +11,11 @@ __all__ = ["NoteRetrieveResponse", "Data", "DataPayload", "DataTimestamp"]
 
 
 class DataPayload(BaseModel):
+    """Either markdown or JSON representation of the note.
+
+    Both can be present as well.
+    """
+
     json_: Optional[object] = FieldInfo(alias="json", default=None)
     """JSON object of the note.
 

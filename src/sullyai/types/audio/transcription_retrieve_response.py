@@ -9,6 +9,11 @@ __all__ = ["TranscriptionRetrieveResponse", "Data", "DataPayload", "DataTimestam
 
 
 class DataPayload(BaseModel):
+    """Either markdown or JSON representation of the note.
+
+    Both can be present as well.
+    """
+
     transcription: Optional[str] = None
     """Transcription of the audio"""
 
