@@ -14,6 +14,8 @@ __all__ = ["Section", "UnionMember1", "UnionMember1Properties", "UnionMember2", 
 
 
 class UnionMember1Properties(BaseModel):
+    """Common properties for text-based content."""
+
     bold: Optional[bool] = None
     """Whether the text should be bold."""
 
@@ -74,6 +76,8 @@ class UnionMember1(BaseModel):
 
 
 class UnionMember2Properties(BaseModel):
+    """Common properties for text-based content."""
+
     bold: Optional[bool] = None
     """Whether the text should be bold."""
 

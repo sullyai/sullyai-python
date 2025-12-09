@@ -52,6 +52,8 @@ class NoteCreateParams(TypedDict, total=False):
 
 
 class NoteType(TypedDict, total=False):
+    """Configuration object specifying the style and format of the generated note"""
+
     description: str
     """A brief overview of the note."""
 
@@ -83,6 +85,8 @@ class NoteType(TypedDict, total=False):
 
 
 class PatientInfo(TypedDict, total=False):
+    """Optional patient information"""
+
     date_of_birth: Annotated[Union[str, date], PropertyInfo(alias="dateOfBirth", format="iso8601")]
     """Patient's date of birth in ISO-8601 format (YYYY-MM-DD)"""
 
