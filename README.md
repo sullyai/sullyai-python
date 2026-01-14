@@ -17,7 +17,7 @@ The REST API documentation can be found on [docs.sully.ai](https://docs.sully.ai
 
 ```sh
 # install from PyPI
-pip install --pre sullyai
+pip install '--pre sullyai'
 ```
 
 ## Usage
@@ -83,7 +83,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install --pre sullyai[aiohttp]
+pip install '--pre sullyai[aiohttp]'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
