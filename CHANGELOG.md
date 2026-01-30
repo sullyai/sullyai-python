@@ -1,5 +1,67 @@
 # Changelog
 
+## 0.1.0-alpha.12 (2026-01-30)
+
+Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
+
+### Features
+
+* **api:** api update ([a1b5ba4](https://github.com/sullyai/sullyai-python/commit/a1b5ba49290ecb23e170baf36e849f1303c53f88))
+* **client:** add custom JSON encoder for extended type support ([a83b8ba](https://github.com/sullyai/sullyai-python/commit/a83b8baf9540bb3cde5eb74c8c10ec57e1bb5919))
+* **client:** add support for binary request streaming ([9b548a6](https://github.com/sullyai/sullyai-python/commit/9b548a6cf70396dc0450e55b6f149b3efb133f77))
+* **client:** support file upload requests ([e959eb3](https://github.com/sullyai/sullyai-python/commit/e959eb38455e39814a6ad7374e526f741d8a2d48))
+* improve future compat with pydantic v3 ([9d5a7d8](https://github.com/sullyai/sullyai-python/commit/9d5a7d87a61833b92b1f8ef412321e80a05851a3))
+* **types:** replace List[str] with SequenceNotStr in params ([d8155f5](https://github.com/sullyai/sullyai-python/commit/d8155f5119bd4b504d1548a6a8f0e80c96441d1b))
+
+
+### Bug Fixes
+
+* avoid newer type syntax ([4b82db1](https://github.com/sullyai/sullyai-python/commit/4b82db1eae977b1a391da9ddc0a45858f5939ba4))
+* **client:** close streams without requiring full consumption ([63fc5b2](https://github.com/sullyai/sullyai-python/commit/63fc5b2f651e38b805e41512743145d4545bf418))
+* compat with Python 3.14 ([402027d](https://github.com/sullyai/sullyai-python/commit/402027d99463f22193ff1970241dda9de3755945))
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([df2ab03](https://github.com/sullyai/sullyai-python/commit/df2ab030fb86550f0337e67505ec3873c11b82f8))
+* ensure streams are always closed ([ee906b8](https://github.com/sullyai/sullyai-python/commit/ee906b8f5df8d1fb5da110bb04df25f2a9e15636))
+* **parsing:** ignore empty metadata ([59033a8](https://github.com/sullyai/sullyai-python/commit/59033a8c89bbe868381bd0fb98631f9ff9b828c7))
+* **parsing:** parse extra field types ([8b4e226](https://github.com/sullyai/sullyai-python/commit/8b4e226ed3e04dfac401fc89d2533a27603b1ceb))
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([8043a89](https://github.com/sullyai/sullyai-python/commit/8043a8936921dd3160f2abba9631744215d3809b))
+* use async_to_httpx_files in patch method ([e6cdd03](https://github.com/sullyai/sullyai-python/commit/e6cdd0310f4ea08c3a32eaea29a4ff625e9caf27))
+
+
+### Chores
+
+* add missing docstrings ([25d70e2](https://github.com/sullyai/sullyai-python/commit/25d70e23499d9e6b6bf0c65b724fe143b225215d))
+* add Python 3.14 classifier and testing ([63fc80e](https://github.com/sullyai/sullyai-python/commit/63fc80ecc51dad5225d8f5ca8cc88bb775f5525d))
+* bump `httpx-aiohttp` version to 0.1.9 ([321f6d6](https://github.com/sullyai/sullyai-python/commit/321f6d65c1be753599c8cc9f769289f022da0682))
+* **ci:** upgrade `actions/github-script` ([ee1117f](https://github.com/sullyai/sullyai-python/commit/ee1117f7376641adf5a65aebb5b21f498406fd2c))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([b91a8be](https://github.com/sullyai/sullyai-python/commit/b91a8be8786ba02f04b1a39a9afc620a833daf82))
+* do not install brew dependencies in ./scripts/bootstrap by default ([5335fa4](https://github.com/sullyai/sullyai-python/commit/5335fa458a250cfe1dce644b8a00af14141f6d36))
+* **docs:** use environment variables for authentication in code snippets ([61bdce4](https://github.com/sullyai/sullyai-python/commit/61bdce4d608f3b8a47e25464ff2c12b0b4945763))
+* **internal/tests:** avoid race condition with implicit client cleanup ([9de2201](https://github.com/sullyai/sullyai-python/commit/9de2201aee00e3f9e705c380d7dc731fabc9677e))
+* **internal:** add `--fix` argument to lint script ([d6e1a5a](https://github.com/sullyai/sullyai-python/commit/d6e1a5a9615de1f36f72435cf907db660d369934))
+* **internal:** add missing files argument to base client ([7c87f94](https://github.com/sullyai/sullyai-python/commit/7c87f940faf32dcfed4b8515c1f0556982eb5da3))
+* **internal:** add Sequence related utils ([78f6a89](https://github.com/sullyai/sullyai-python/commit/78f6a8990ee7f0c80c78d1cb751ff6dfae57f927))
+* **internal:** change ci workflow machines ([99053fb](https://github.com/sullyai/sullyai-python/commit/99053fb68f9dd26c15c140d7506610c59a835b17))
+* **internal:** codegen related update ([cbb9b67](https://github.com/sullyai/sullyai-python/commit/cbb9b678f24c76616785e9993c5876f24774a1f2))
+* **internal:** codegen related update ([d623a27](https://github.com/sullyai/sullyai-python/commit/d623a272535f63c520410c31e9a610261d094a0f))
+* **internal:** codegen related update ([fe00231](https://github.com/sullyai/sullyai-python/commit/fe00231393e3d4369d47c473baacd53174846f8a))
+* **internal:** codegen related update ([298757c](https://github.com/sullyai/sullyai-python/commit/298757cc306c30ac685394004b6cf796a3bbceca))
+* **internal:** detect missing future annotations with ruff ([1fead4e](https://github.com/sullyai/sullyai-python/commit/1fead4eadbf3457047e576ef32886e6d4101ec8b))
+* **internal:** fix ruff target version ([1a6537f](https://github.com/sullyai/sullyai-python/commit/1a6537f645c0793bd528d1912af3c94414f888b9))
+* **internal:** grammar fix (it's -&gt; its) ([c63d6c8](https://github.com/sullyai/sullyai-python/commit/c63d6c895f4867e47153374d425ec157e637a2ec))
+* **internal:** move mypy configurations to `pyproject.toml` file ([a168da6](https://github.com/sullyai/sullyai-python/commit/a168da6c54df680c430d00386e905d32250119d3))
+* **internal:** update `actions/checkout` version ([a823127](https://github.com/sullyai/sullyai-python/commit/a823127f9c43aa3e486cbf20b5e0977e7ada0173))
+* **internal:** update comment in script ([8977a6d](https://github.com/sullyai/sullyai-python/commit/8977a6daacfcee37b1865b2235ac0e81cd6ec9f0))
+* **internal:** update pydantic dependency ([668fca1](https://github.com/sullyai/sullyai-python/commit/668fca16889a148d92b55d373275cf92b2ccd613))
+* **internal:** update pyright exclude list ([f2f5a4c](https://github.com/sullyai/sullyai-python/commit/f2f5a4c91f3b32b9126d08be664379ed9dfc6b5a))
+* **package:** drop Python 3.8 support ([d36fbe6](https://github.com/sullyai/sullyai-python/commit/d36fbe6929728b39b198a34c77b756bbcf2435f3))
+* **project:** add settings file for vscode ([0bad91b](https://github.com/sullyai/sullyai-python/commit/0bad91bd013e50f0446676398e7a1fa2d8e5af2e))
+* speedup initial import ([acf5739](https://github.com/sullyai/sullyai-python/commit/acf57393f238da2eda9e689a64c5ec8bee27b000))
+* **types:** change optional parameter type from NotGiven to Omit ([350585c](https://github.com/sullyai/sullyai-python/commit/350585cccc36012f920fc9aacc2620b5d538f073))
+* **types:** rebuild Pydantic models after all types are defined ([34c6d30](https://github.com/sullyai/sullyai-python/commit/34c6d300c0696c125ed1eec3f7e001f52b918695))
+* update @stainless-api/prism-cli to v5.15.0 ([c72e48f](https://github.com/sullyai/sullyai-python/commit/c72e48fe5c2ea46870718c0c86afffaa084c6185))
+* update github action ([fbb9ef7](https://github.com/sullyai/sullyai-python/commit/fbb9ef7669726c8ee50799710b6ffb4a657be588))
+* update lockfile ([6ca5340](https://github.com/sullyai/sullyai-python/commit/6ca534029bf6bea39e2d85d0f5ade00a7665f629))
+
 ## 0.1.0-alpha.11 (2025-07-15)
 
 Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/sullyai/sullyai-python/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
