@@ -7,13 +7,15 @@ from typing_extensions import Literal, TypeAlias, TypeAliasType
 
 from pydantic import Field as FieldInfo
 
-from ..._compat import PYDANTIC_V2
+from ..._compat import PYDANTIC_V1
 from ..._models import BaseModel
 
 __all__ = ["Section", "UnionMember1", "UnionMember1Properties", "UnionMember2", "UnionMember2Properties"]
 
 
 class UnionMember1Properties(BaseModel):
+    """Common properties for text-based content."""
+
     bold: Optional[bool] = None
     """Whether the text should be bold."""
 
@@ -74,6 +76,8 @@ class UnionMember1(BaseModel):
 
 
 class UnionMember2Properties(BaseModel):
+    """Common properties for text-based content."""
+
     bold: Optional[bool] = None
     """Whether the text should be bold."""
 
@@ -118,20 +122,9 @@ class UnionMember2(BaseModel):
     type: Optional[Literal["list", "heading", "text"]] = None
 
 
-if TYPE_CHECKING or PYDANTIC_V2:
+if TYPE_CHECKING or not PYDANTIC_V1:
     Section = TypeAliasType("Section", Union["HeadingSection", UnionMember1, UnionMember2])
 else:
     Section: TypeAlias = Union["HeadingSection", UnionMember1, UnionMember2]
 
 from .heading_section import HeadingSection
-
-if PYDANTIC_V2:
-    UnionMember1.model_rebuild()
-    UnionMember1Properties.model_rebuild()
-    UnionMember2.model_rebuild()
-    UnionMember2Properties.model_rebuild()
-else:
-    UnionMember1.update_forward_refs()  # type: ignore
-    UnionMember1Properties.update_forward_refs()  # type: ignore
-    UnionMember2.update_forward_refs()  # type: ignore
-    UnionMember2Properties.update_forward_refs()  # type: ignore

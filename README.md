@@ -3,7 +3,7 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/sullyai.svg?label=pypi%20(stable))](https://pypi.org/project/sullyai/)
 
-The Sully AI Python library provides convenient access to the Sully AI REST API from any Python 3.8+
+The Sully AI Python library provides convenient access to the Sully AI REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -17,7 +17,7 @@ The REST API documentation can be found on [docs.sully.ai](https://docs.sully.ai
 
 ```sh
 # install from PyPI
-pip install --pre sullyai
+pip install '--pre sullyai'
 ```
 
 ## Usage
@@ -83,12 +83,13 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install --pre sullyai[aiohttp]
+pip install '--pre sullyai[aiohttp]'
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from sullyai import DefaultAioHttpClient
 from sullyai import AsyncSullyAI
@@ -96,8 +97,8 @@ from sullyai import AsyncSullyAI
 
 async def main() -> None:
     async with AsyncSullyAI(
-        api_key="My API Key",
-        account_id="My Account ID",
+        api_key=os.environ.get("SULLYAI_API_KEY"),  # This is the default and can be omitted
+        account_id=os.environ.get("SULLYAI_ACCOUNT_ID"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         note = await client.notes.retrieve(
@@ -118,8 +119,6 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
 
-from datetime import date
-
 ## Nested params
 
 Nested parameters are dictionaries, typed using `TypedDict`, for example:
@@ -130,7 +129,6 @@ from sullyai import SullyAI
 client = SullyAI()
 
 note = client.notes.create(
-    date=date.fromisoformat("2019-12-27"),
     transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
     note_type={},
 )
@@ -415,7 +413,7 @@ print(sullyai.__version__)
 
 ## Requirements
 
-Python 3.8 or higher.
+Python 3.9 or higher.
 
 ## Contributing
 

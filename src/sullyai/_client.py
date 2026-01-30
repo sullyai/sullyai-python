@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Dict, Union, Mapping, cast
+from typing import TYPE_CHECKING, Any, Dict, Mapping, cast
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -11,17 +11,17 @@ import httpx
 from . import _exceptions
 from ._qs import Querystring
 from ._types import (
-    NOT_GIVEN,
     Omit,
     Timeout,
     NotGiven,
     Transport,
     ProxiesTypes,
     RequestOptions,
+    not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import notes, note_styles
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import SullyAIError, APIStatusError
 from ._base_client import (
@@ -29,7 +29,12 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
-from .resources.audio import audio
+
+if TYPE_CHECKING:
+    from .resources import audio, notes, note_styles
+    from .resources.notes import NotesResource, AsyncNotesResource
+    from .resources.audio.audio import AudioResource, AsyncAudioResource
+    from .resources.note_styles import NoteStylesResource, AsyncNoteStylesResource
 
 __all__ = [
     "ENVIRONMENTS",
@@ -50,12 +55,6 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class SullyAI(SyncAPIClient):
-    notes: notes.NotesResource
-    note_styles: note_styles.NoteStylesResource
-    audio: audio.AudioResource
-    with_raw_response: SullyAIWithRawResponse
-    with_streaming_response: SullyAIWithStreamedResponse
-
     # client options
     api_key: str
     account_id: str
@@ -67,9 +66,9 @@ class SullyAI(SyncAPIClient):
         *,
         api_key: str | None = None,
         account_id: str | None = None,
-        environment: Literal["production", "test"] | NotGiven = NOT_GIVEN,
-        base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
-        timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
+        environment: Literal["production", "test"] | NotGiven = not_given,
+        base_url: str | httpx.URL | None | NotGiven = not_given,
+        timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -146,11 +145,31 @@ class SullyAI(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.notes = notes.NotesResource(self)
-        self.note_styles = note_styles.NoteStylesResource(self)
-        self.audio = audio.AudioResource(self)
-        self.with_raw_response = SullyAIWithRawResponse(self)
-        self.with_streaming_response = SullyAIWithStreamedResponse(self)
+    @cached_property
+    def notes(self) -> NotesResource:
+        from .resources.notes import NotesResource
+
+        return NotesResource(self)
+
+    @cached_property
+    def note_styles(self) -> NoteStylesResource:
+        from .resources.note_styles import NoteStylesResource
+
+        return NoteStylesResource(self)
+
+    @cached_property
+    def audio(self) -> AudioResource:
+        from .resources.audio import AudioResource
+
+        return AudioResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> SullyAIWithRawResponse:
+        return SullyAIWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> SullyAIWithStreamedResponse:
+        return SullyAIWithStreamedResponse(self)
 
     @property
     @override
@@ -188,9 +207,9 @@ class SullyAI(SyncAPIClient):
         account_id: str | None = None,
         environment: Literal["production", "test"] | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
-        max_retries: int | NotGiven = NOT_GIVEN,
+        max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -271,12 +290,6 @@ class SullyAI(SyncAPIClient):
 
 
 class AsyncSullyAI(AsyncAPIClient):
-    notes: notes.AsyncNotesResource
-    note_styles: note_styles.AsyncNoteStylesResource
-    audio: audio.AsyncAudioResource
-    with_raw_response: AsyncSullyAIWithRawResponse
-    with_streaming_response: AsyncSullyAIWithStreamedResponse
-
     # client options
     api_key: str
     account_id: str
@@ -288,9 +301,9 @@ class AsyncSullyAI(AsyncAPIClient):
         *,
         api_key: str | None = None,
         account_id: str | None = None,
-        environment: Literal["production", "test"] | NotGiven = NOT_GIVEN,
-        base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
-        timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
+        environment: Literal["production", "test"] | NotGiven = not_given,
+        base_url: str | httpx.URL | None | NotGiven = not_given,
+        timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -367,11 +380,31 @@ class AsyncSullyAI(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.notes = notes.AsyncNotesResource(self)
-        self.note_styles = note_styles.AsyncNoteStylesResource(self)
-        self.audio = audio.AsyncAudioResource(self)
-        self.with_raw_response = AsyncSullyAIWithRawResponse(self)
-        self.with_streaming_response = AsyncSullyAIWithStreamedResponse(self)
+    @cached_property
+    def notes(self) -> AsyncNotesResource:
+        from .resources.notes import AsyncNotesResource
+
+        return AsyncNotesResource(self)
+
+    @cached_property
+    def note_styles(self) -> AsyncNoteStylesResource:
+        from .resources.note_styles import AsyncNoteStylesResource
+
+        return AsyncNoteStylesResource(self)
+
+    @cached_property
+    def audio(self) -> AsyncAudioResource:
+        from .resources.audio import AsyncAudioResource
+
+        return AsyncAudioResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncSullyAIWithRawResponse:
+        return AsyncSullyAIWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncSullyAIWithStreamedResponse:
+        return AsyncSullyAIWithStreamedResponse(self)
 
     @property
     @override
@@ -409,9 +442,9 @@ class AsyncSullyAI(AsyncAPIClient):
         account_id: str | None = None,
         environment: Literal["production", "test"] | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
-        max_retries: int | NotGiven = NOT_GIVEN,
+        max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -492,31 +525,103 @@ class AsyncSullyAI(AsyncAPIClient):
 
 
 class SullyAIWithRawResponse:
+    _client: SullyAI
+
     def __init__(self, client: SullyAI) -> None:
-        self.notes = notes.NotesResourceWithRawResponse(client.notes)
-        self.note_styles = note_styles.NoteStylesResourceWithRawResponse(client.note_styles)
-        self.audio = audio.AudioResourceWithRawResponse(client.audio)
+        self._client = client
+
+    @cached_property
+    def notes(self) -> notes.NotesResourceWithRawResponse:
+        from .resources.notes import NotesResourceWithRawResponse
+
+        return NotesResourceWithRawResponse(self._client.notes)
+
+    @cached_property
+    def note_styles(self) -> note_styles.NoteStylesResourceWithRawResponse:
+        from .resources.note_styles import NoteStylesResourceWithRawResponse
+
+        return NoteStylesResourceWithRawResponse(self._client.note_styles)
+
+    @cached_property
+    def audio(self) -> audio.AudioResourceWithRawResponse:
+        from .resources.audio import AudioResourceWithRawResponse
+
+        return AudioResourceWithRawResponse(self._client.audio)
 
 
 class AsyncSullyAIWithRawResponse:
+    _client: AsyncSullyAI
+
     def __init__(self, client: AsyncSullyAI) -> None:
-        self.notes = notes.AsyncNotesResourceWithRawResponse(client.notes)
-        self.note_styles = note_styles.AsyncNoteStylesResourceWithRawResponse(client.note_styles)
-        self.audio = audio.AsyncAudioResourceWithRawResponse(client.audio)
+        self._client = client
+
+    @cached_property
+    def notes(self) -> notes.AsyncNotesResourceWithRawResponse:
+        from .resources.notes import AsyncNotesResourceWithRawResponse
+
+        return AsyncNotesResourceWithRawResponse(self._client.notes)
+
+    @cached_property
+    def note_styles(self) -> note_styles.AsyncNoteStylesResourceWithRawResponse:
+        from .resources.note_styles import AsyncNoteStylesResourceWithRawResponse
+
+        return AsyncNoteStylesResourceWithRawResponse(self._client.note_styles)
+
+    @cached_property
+    def audio(self) -> audio.AsyncAudioResourceWithRawResponse:
+        from .resources.audio import AsyncAudioResourceWithRawResponse
+
+        return AsyncAudioResourceWithRawResponse(self._client.audio)
 
 
 class SullyAIWithStreamedResponse:
+    _client: SullyAI
+
     def __init__(self, client: SullyAI) -> None:
-        self.notes = notes.NotesResourceWithStreamingResponse(client.notes)
-        self.note_styles = note_styles.NoteStylesResourceWithStreamingResponse(client.note_styles)
-        self.audio = audio.AudioResourceWithStreamingResponse(client.audio)
+        self._client = client
+
+    @cached_property
+    def notes(self) -> notes.NotesResourceWithStreamingResponse:
+        from .resources.notes import NotesResourceWithStreamingResponse
+
+        return NotesResourceWithStreamingResponse(self._client.notes)
+
+    @cached_property
+    def note_styles(self) -> note_styles.NoteStylesResourceWithStreamingResponse:
+        from .resources.note_styles import NoteStylesResourceWithStreamingResponse
+
+        return NoteStylesResourceWithStreamingResponse(self._client.note_styles)
+
+    @cached_property
+    def audio(self) -> audio.AudioResourceWithStreamingResponse:
+        from .resources.audio import AudioResourceWithStreamingResponse
+
+        return AudioResourceWithStreamingResponse(self._client.audio)
 
 
 class AsyncSullyAIWithStreamedResponse:
+    _client: AsyncSullyAI
+
     def __init__(self, client: AsyncSullyAI) -> None:
-        self.notes = notes.AsyncNotesResourceWithStreamingResponse(client.notes)
-        self.note_styles = note_styles.AsyncNoteStylesResourceWithStreamingResponse(client.note_styles)
-        self.audio = audio.AsyncAudioResourceWithStreamingResponse(client.audio)
+        self._client = client
+
+    @cached_property
+    def notes(self) -> notes.AsyncNotesResourceWithStreamingResponse:
+        from .resources.notes import AsyncNotesResourceWithStreamingResponse
+
+        return AsyncNotesResourceWithStreamingResponse(self._client.notes)
+
+    @cached_property
+    def note_styles(self) -> note_styles.AsyncNoteStylesResourceWithStreamingResponse:
+        from .resources.note_styles import AsyncNoteStylesResourceWithStreamingResponse
+
+        return AsyncNoteStylesResourceWithStreamingResponse(self._client.note_styles)
+
+    @cached_property
+    def audio(self) -> audio.AsyncAudioResourceWithStreamingResponse:
+        from .resources.audio import AsyncAudioResourceWithStreamingResponse
+
+        return AsyncAudioResourceWithStreamingResponse(self._client.audio)
 
 
 Client = SullyAI

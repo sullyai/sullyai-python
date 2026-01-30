@@ -18,7 +18,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestTranscriptions:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: SullyAI) -> None:
         transcription = client.audio.transcriptions.create(
@@ -26,7 +26,7 @@ class TestTranscriptions:
         )
         assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: SullyAI) -> None:
         transcription = client.audio.transcriptions.create(
@@ -35,7 +35,7 @@ class TestTranscriptions:
         )
         assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: SullyAI) -> None:
         response = client.audio.transcriptions.with_raw_response.create(
@@ -47,7 +47,7 @@ class TestTranscriptions:
         transcription = response.parse()
         assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: SullyAI) -> None:
         with client.audio.transcriptions.with_streaming_response.create(
@@ -61,7 +61,7 @@ class TestTranscriptions:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: SullyAI) -> None:
         transcription = client.audio.transcriptions.retrieve(
@@ -69,7 +69,7 @@ class TestTranscriptions:
         )
         assert_matches_type(TranscriptionRetrieveResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: SullyAI) -> None:
         response = client.audio.transcriptions.with_raw_response.retrieve(
@@ -81,7 +81,7 @@ class TestTranscriptions:
         transcription = response.parse()
         assert_matches_type(TranscriptionRetrieveResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: SullyAI) -> None:
         with client.audio.transcriptions.with_streaming_response.retrieve(
@@ -95,7 +95,7 @@ class TestTranscriptions:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: SullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `transcription_id` but received ''"):
@@ -103,7 +103,7 @@ class TestTranscriptions:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: SullyAI) -> None:
         transcription = client.audio.transcriptions.delete(
@@ -111,7 +111,7 @@ class TestTranscriptions:
         )
         assert_matches_type(DeleteResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: SullyAI) -> None:
         response = client.audio.transcriptions.with_raw_response.delete(
@@ -123,7 +123,7 @@ class TestTranscriptions:
         transcription = response.parse()
         assert_matches_type(DeleteResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: SullyAI) -> None:
         with client.audio.transcriptions.with_streaming_response.delete(
@@ -137,7 +137,7 @@ class TestTranscriptions:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: SullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `transcription_id` but received ''"):
@@ -151,7 +151,7 @@ class TestAsyncTranscriptions:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncSullyAI) -> None:
         transcription = await async_client.audio.transcriptions.create(
@@ -159,7 +159,7 @@ class TestAsyncTranscriptions:
         )
         assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSullyAI) -> None:
         transcription = await async_client.audio.transcriptions.create(
@@ -168,7 +168,7 @@ class TestAsyncTranscriptions:
         )
         assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.audio.transcriptions.with_raw_response.create(
@@ -180,7 +180,7 @@ class TestAsyncTranscriptions:
         transcription = await response.parse()
         assert_matches_type(TranscriptionCreateResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSullyAI) -> None:
         async with async_client.audio.transcriptions.with_streaming_response.create(
@@ -194,7 +194,7 @@ class TestAsyncTranscriptions:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncSullyAI) -> None:
         transcription = await async_client.audio.transcriptions.retrieve(
@@ -202,7 +202,7 @@ class TestAsyncTranscriptions:
         )
         assert_matches_type(TranscriptionRetrieveResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.audio.transcriptions.with_raw_response.retrieve(
@@ -214,7 +214,7 @@ class TestAsyncTranscriptions:
         transcription = await response.parse()
         assert_matches_type(TranscriptionRetrieveResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncSullyAI) -> None:
         async with async_client.audio.transcriptions.with_streaming_response.retrieve(
@@ -228,7 +228,7 @@ class TestAsyncTranscriptions:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncSullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `transcription_id` but received ''"):
@@ -236,7 +236,7 @@ class TestAsyncTranscriptions:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncSullyAI) -> None:
         transcription = await async_client.audio.transcriptions.delete(
@@ -244,7 +244,7 @@ class TestAsyncTranscriptions:
         )
         assert_matches_type(DeleteResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.audio.transcriptions.with_raw_response.delete(
@@ -256,7 +256,7 @@ class TestAsyncTranscriptions:
         transcription = await response.parse()
         assert_matches_type(DeleteResponse, transcription, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncSullyAI) -> None:
         async with async_client.audio.transcriptions.with_streaming_response.delete(
@@ -270,7 +270,7 @@ class TestAsyncTranscriptions:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncSullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `transcription_id` but received ''"):

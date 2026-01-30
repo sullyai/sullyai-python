@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List, Union, Optional
-from datetime import date
+from typing import Optional
 from typing_extensions import Literal
 
 import httpx
 
 from ..types import note_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -50,31 +49,32 @@ class NotesResource(SyncAPIResource):
     def create(
         self,
         *,
-        date: Union[str, date],
         transcript: str,
-        context: Optional[str] | NotGiven = NOT_GIVEN,
-        instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | NotGiven = NOT_GIVEN,
-        medication_list: str | NotGiven = NOT_GIVEN,
-        note_type: note_create_params.NoteType | NotGiven = NOT_GIVEN,
-        patient_info: note_create_params.PatientInfo | NotGiven = NOT_GIVEN,
-        previous_note: str | NotGiven = NOT_GIVEN,
+        context: Optional[str] | Omit = omit,
+        date: str | Omit = omit,
+        instructions: Optional[SequenceNotStr[str]] | Omit = omit,
+        language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | Omit = omit,
+        medication_list: str | Omit = omit,
+        note_type: note_create_params.NoteType | Omit = omit,
+        patient_info: note_create_params.PatientInfo | Omit = omit,
+        previous_note: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NoteCreateResponse:
         """
         Creates a new note
 
         Args:
-          date: Date of the patient encounter
-
           transcript: The raw medical transcript text to be processed into a clinical note
 
           context: Additional context for note generation. This field is optional.
+
+          date: Date of the patient encounter in ISO format (YYYY-MM-DD) or ISO datetime format
+              (YYYY-MM-DDTHH:mm:ssZ)
 
           instructions: Special instructions for note generation. This field is optional.
 
@@ -103,9 +103,9 @@ class NotesResource(SyncAPIResource):
             "/v1/notes",
             body=maybe_transform(
                 {
-                    "date": date,
                     "transcript": transcript,
                     "context": context,
+                    "date": date,
                     "instructions": instructions,
                     "language": language,
                     "medication_list": medication_list,
@@ -130,7 +130,7 @@ class NotesResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NoteRetrieveResponse:
         """
         Gets a single note based on the ID supplied
@@ -163,7 +163,7 @@ class NotesResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeleteResponse:
         """
         Deletes a single note based on the ID supplied
@@ -211,31 +211,32 @@ class AsyncNotesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        date: Union[str, date],
         transcript: str,
-        context: Optional[str] | NotGiven = NOT_GIVEN,
-        instructions: Optional[List[str]] | NotGiven = NOT_GIVEN,
-        language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | NotGiven = NOT_GIVEN,
-        medication_list: str | NotGiven = NOT_GIVEN,
-        note_type: note_create_params.NoteType | NotGiven = NOT_GIVEN,
-        patient_info: note_create_params.PatientInfo | NotGiven = NOT_GIVEN,
-        previous_note: str | NotGiven = NOT_GIVEN,
+        context: Optional[str] | Omit = omit,
+        date: str | Omit = omit,
+        instructions: Optional[SequenceNotStr[str]] | Omit = omit,
+        language: Literal["en", "es", "fr", "de", "it", "pt", "ru", "zh"] | Omit = omit,
+        medication_list: str | Omit = omit,
+        note_type: note_create_params.NoteType | Omit = omit,
+        patient_info: note_create_params.PatientInfo | Omit = omit,
+        previous_note: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NoteCreateResponse:
         """
         Creates a new note
 
         Args:
-          date: Date of the patient encounter
-
           transcript: The raw medical transcript text to be processed into a clinical note
 
           context: Additional context for note generation. This field is optional.
+
+          date: Date of the patient encounter in ISO format (YYYY-MM-DD) or ISO datetime format
+              (YYYY-MM-DDTHH:mm:ssZ)
 
           instructions: Special instructions for note generation. This field is optional.
 
@@ -264,9 +265,9 @@ class AsyncNotesResource(AsyncAPIResource):
             "/v1/notes",
             body=await async_maybe_transform(
                 {
-                    "date": date,
                     "transcript": transcript,
                     "context": context,
+                    "date": date,
                     "instructions": instructions,
                     "language": language,
                     "medication_list": medication_list,
@@ -291,7 +292,7 @@ class AsyncNotesResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> NoteRetrieveResponse:
         """
         Gets a single note based on the ID supplied
@@ -324,7 +325,7 @@ class AsyncNotesResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> DeleteResponse:
         """
         Deletes a single note based on the ID supplied

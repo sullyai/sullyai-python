@@ -18,22 +18,21 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestNotes:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: SullyAI) -> None:
         note = client.notes.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: SullyAI) -> None:
         note = client.notes.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
             context="context",
+            date="3216-99-02T56:01:57Z",
             instructions=[
                 "Use a professional and concise tone.",
                 "Include key details without unnecessary elaboration.",
@@ -56,11 +55,10 @@ class TestNotes:
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: SullyAI) -> None:
         response = client.notes.with_raw_response.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
 
@@ -69,11 +67,10 @@ class TestNotes:
         note = response.parse()
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: SullyAI) -> None:
         with client.notes.with_streaming_response.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         ) as response:
             assert not response.is_closed
@@ -84,7 +81,7 @@ class TestNotes:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: SullyAI) -> None:
         note = client.notes.retrieve(
@@ -92,7 +89,7 @@ class TestNotes:
         )
         assert_matches_type(NoteRetrieveResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: SullyAI) -> None:
         response = client.notes.with_raw_response.retrieve(
@@ -104,7 +101,7 @@ class TestNotes:
         note = response.parse()
         assert_matches_type(NoteRetrieveResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: SullyAI) -> None:
         with client.notes.with_streaming_response.retrieve(
@@ -118,7 +115,7 @@ class TestNotes:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_retrieve(self, client: SullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `note_id` but received ''"):
@@ -126,7 +123,7 @@ class TestNotes:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: SullyAI) -> None:
         note = client.notes.delete(
@@ -134,7 +131,7 @@ class TestNotes:
         )
         assert_matches_type(DeleteResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: SullyAI) -> None:
         response = client.notes.with_raw_response.delete(
@@ -146,7 +143,7 @@ class TestNotes:
         note = response.parse()
         assert_matches_type(DeleteResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: SullyAI) -> None:
         with client.notes.with_streaming_response.delete(
@@ -160,7 +157,7 @@ class TestNotes:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_path_params_delete(self, client: SullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `note_id` but received ''"):
@@ -174,22 +171,21 @@ class TestAsyncNotes:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
             context="context",
+            date="3216-99-02T56:01:57Z",
             instructions=[
                 "Use a professional and concise tone.",
                 "Include key details without unnecessary elaboration.",
@@ -212,11 +208,10 @@ class TestAsyncNotes:
         )
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.notes.with_raw_response.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         )
 
@@ -225,11 +220,10 @@ class TestAsyncNotes:
         note = await response.parse()
         assert_matches_type(NoteCreateResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSullyAI) -> None:
         async with async_client.notes.with_streaming_response.create(
-            date=parse_date("2019-12-27"),
             transcript="Hey, how's it going? Good good yeah, so what's going on? Yeah, hi I'm Edward yeah hi hi Edward. How's it going? Yeah, good good. So I've been having a couple of issues like my back pain and knee pain.",
         ) as response:
             assert not response.is_closed
@@ -240,7 +234,7 @@ class TestAsyncNotes:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.retrieve(
@@ -248,7 +242,7 @@ class TestAsyncNotes:
         )
         assert_matches_type(NoteRetrieveResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.notes.with_raw_response.retrieve(
@@ -260,7 +254,7 @@ class TestAsyncNotes:
         note = await response.parse()
         assert_matches_type(NoteRetrieveResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncSullyAI) -> None:
         async with async_client.notes.with_streaming_response.retrieve(
@@ -274,7 +268,7 @@ class TestAsyncNotes:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncSullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `note_id` but received ''"):
@@ -282,7 +276,7 @@ class TestAsyncNotes:
                 "",
             )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncSullyAI) -> None:
         note = await async_client.notes.delete(
@@ -290,7 +284,7 @@ class TestAsyncNotes:
         )
         assert_matches_type(DeleteResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncSullyAI) -> None:
         response = await async_client.notes.with_raw_response.delete(
@@ -302,7 +296,7 @@ class TestAsyncNotes:
         note = await response.parse()
         assert_matches_type(DeleteResponse, note, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncSullyAI) -> None:
         async with async_client.notes.with_streaming_response.delete(
@@ -316,7 +310,7 @@ class TestAsyncNotes:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncSullyAI) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `note_id` but received ''"):
